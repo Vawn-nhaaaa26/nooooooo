@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "migrate:sqlserver": "node scripts/migrate-sqlite-to-sqlserver.mjs"
+    "migrate:sqlserver": "node scripts/migrate-sqlite-to-sqlserver.mjs",
+    "export:mongodb": "node scripts/export-sqlserver-to-mongodb.mjs",
+    "import:mongodb": "node scripts/import-mongodb-export.mjs"
   },
   "dependencies": {
     "google-auth-library": "^11.3.4",
-    "msnodesqlv8": "^6.2.2",
-    "mssql": "^12.7.14"
+    "mongodb": "^7.9.0"
   }
 }

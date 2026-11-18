@@ -1,0 +1,803 @@
+{
+  "version": 2,
+  "skills": {
+    "active-connections": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/active-connections/SKILL.md",
+      "computedHash": "29909a2a520090a3ba749678f0c0ebbaf09b9ab02e4b9f27ce1bca8fab18810d"
+    },
+    "always-encrypted-columns": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/always-encrypted-columns/SKILL.md",
+      "computedHash": "f095b3ab220074cab8eb0611c57e3f067176a136cdafd72ae84de590056442cf"
+    },
+    "analyze-readiness-at-scale": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/analyze-readiness-at-scale/SKILL.md",
+      "computedHash": "45be41a3f230bb1bf925fde81b8e05fb8d32be1977e4496dc12d7fb4d5a68ff4"
+    },
+    "authentication-diagnostics": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/authentication-diagnostics/SKILL.md",
+      "computedHash": "ff5125fbd8cf557570ec1c1f84ba5499dcd7c9fe93abba2786381a84d09583a9"
+    },
+    "azure-functions-sql-bindings": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/azure-functions-sql-bindings/SKILL.md",
+      "computedHash": "2f134387709eabad790daad7a766185adb39e4ccaee395e997195a52fd5ceda3"
+    },
+    "azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/azure-sql/SKILL.md",
+      "computedHash": "f53b47c471af1a811e6f09fc3f58f96e60c4f67ebb9a9a5eaab0dec449f0d895"
+    },
+    "azuresql-db-auth": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-auth/SKILL.md",
+      "computedHash": "3246a634a01159a5bb69cd044907182a56e72d8c0393aed89353ee39667d27cb"
+    },
+    "azuresql-db-ci": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-ci/SKILL.md",
+      "computedHash": "5b28b857f44b87fe5fc65bf33317dcc8e7d497fe1bb18979a2ef1f45b65c1b0a"
+    },
+    "azuresql-db-connections": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-connections/SKILL.md",
+      "computedHash": "556b47c10aa5739a1c4d185cd9007d6b084802ac1085986a094845a0261378e4"
+    },
+    "azuresql-db-container": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-container/SKILL.md",
+      "computedHash": "002cd67a0c5da5bb172ae67bf31d4cd7fdfec2592886738fae5b968c71a7b351"
+    },
+    "azuresql-db-dab": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-dab/SKILL.md",
+      "computedHash": "b63a66cc87a9f425e26c69331512602bf1dbca12d93bf33bf764348d35574b18"
+    },
+    "azuresql-db-faq": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-faq/SKILL.md",
+      "computedHash": "2a7ec05162b6a8fa193057b28325f55d9b1d7fb619f54204279f5a4cd2727653"
+    },
+    "azuresql-db-feedback": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-feedback/SKILL.md",
+      "computedHash": "1fda9a46ea46c65a11205ead8677740517855415362e1846255c1a590a3181ef"
+    },
+    "azuresql-db-from-sql-server": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-from-sql-server/SKILL.md",
+      "computedHash": "4d3e07a9a346083e50a2063d4aa4f94ba5ca542c2f128accf5faa891a8ab8df4"
+    },
+    "azuresql-db-functions": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-functions/SKILL.md",
+      "computedHash": "9af8871140c3529cac8975b05750ef3546565be9f502b06bef4f4ad83c74a220"
+    },
+    "azuresql-db-import": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-import/SKILL.md",
+      "computedHash": "6147a69a72b24994c7fb57adb41fb700d27f64d05b240b6dbc89a60638a0f23c"
+    },
+    "azuresql-db-local-to-cloud": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-local-to-cloud/SKILL.md",
+      "computedHash": "f93c510517423dfce061cdf84cdf4d65b049a39ab4a4cf0949730756ab875b7e"
+    },
+    "azuresql-db-rag": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-rag/SKILL.md",
+      "computedHash": "01a0b7df420d40952507427d91fe450bd73cb57980fd12da610fe576909051c2"
+    },
+    "azuresql-db-scaffold": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-scaffold/SKILL.md",
+      "computedHash": "80a6382abc23172be94fba18801a5d4dfb0b36a28d36fc0259551d40f9ec6c32"
+    },
+    "azuresql-db-schema-migration": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-schema-migration/SKILL.md",
+      "computedHash": "d969f8b169d794c0015dc837a16b21376143d45d97f12f02a8bdd5ccb0971ddf"
+    },
+    "azuresql-db-seed": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-seed/SKILL.md",
+      "computedHash": "61f4bb0823c54bfe7c1802ef4bc46b1c403eacb3a06399592793399cc3dbda79"
+    },
+    "azuresql-db-sidecar": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-sidecar/SKILL.md",
+      "computedHash": "0071542263ba180231338f9fa48ba922350c54feeb91e03cf85845eb27d823d2"
+    },
+    "azuresql-db-testing": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-azuresqldb-container/skills/azuresql-db-testing/SKILL.md",
+      "computedHash": "661572bad294b96f7e053928b452c76fb5815222289d553a59b0d18638a50026"
+    },
+    "backup-history-azuresql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/backup-history-azuresql/SKILL.md",
+      "computedHash": "12103bc7a8484494a28209792185308ba0ef9ad1f320f46110403b1fd8bf2ca8"
+    },
+    "backup-strategy-sqlserver": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/backup-strategy-sqlserver/SKILL.md",
+      "computedHash": "22de561e3bbd50fb64ce0debb75b63fe37b7b582f8172d16c92d8e119cc76481"
+    },
+    "blocking-root-cause-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/blocking-root-cause-analysis/SKILL.md",
+      "computedHash": "d6cec1efc3c93b2cdc0f8173f21cbd7ad1f3d118bea16c731b81b5df2521d5d5"
+    },
+    "build-app-on-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/build-app-on-azure-sql/SKILL.md",
+      "computedHash": "0ff378bf1c56f4ff12ec1ac3276b6177d48a4bd1f3492b9957c6c4b04f9e8445"
+    },
+    "bulk-load-and-bulk-copy": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/bulk-load-and-bulk-copy/SKILL.md",
+      "computedHash": "b7c9ecabd94a5df3922d84b826f7fcb44a908fca367307b4355f7748769657be"
+    },
+    "check-live-blocking": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/check-live-blocking/SKILL.md",
+      "computedHash": "a0c041c4298dec4b14cb757b0e12b76a388b1d194e883f9fa4d8518c4f0b433e"
+    },
+    "code-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/code-analysis/SKILL.md",
+      "computedHash": "6475a2ce4aeef003993691cb284309131e4c0f983496a57e723b8d4e58271898"
+    },
+    "connect-from-dotnet": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/connect-from-dotnet/SKILL.md",
+      "computedHash": "013b8093a39f59a610ec917e5fadc8fa4f9a017f6ef6f89de301ecd9ca933062"
+    },
+    "connect-from-python": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/connect-from-python/SKILL.md",
+      "computedHash": "480156d589ebc20bd5e6a79228e855366dccef36927fdbcc83abbefa66c5d4b8"
+    },
+    "connect-from-typescript-and-node": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/connect-from-typescript-and-node/SKILL.md",
+      "computedHash": "e1cd3ad1174fd4864542915619a25088b129798b9d90d1f840f92f9e1aa5a24d"
+    },
+    "connect-to-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/connect-to-azure-sql/SKILL.md",
+      "computedHash": "54b83cbad37e5eb6ec7377119d3709303bcff6823a0cf7dd5856582b0c9ea022"
+    },
+    "connectivity-troubleshoot": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/connectivity-troubleshoot/SKILL.md",
+      "computedHash": "a2cc461848894e87e5703b90c3ca5339c6c3909e978e8c60bfb29b018a97afa5"
+    },
+    "create-xe-session": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/create-xe-session/SKILL.md",
+      "computedHash": "fed1f3c95059cea94e816f0c7978a967f18bbadcf48683c034766fc9e634533d"
+    },
+    "dab-mcp-endpoint": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/dab-mcp-endpoint/SKILL.md",
+      "computedHash": "81e266eda9880d751c2697bfa7ba1b3293a04b3ccc31525fca6b2aaff7cef0eb"
+    },
+    "dab-rest-and-graphql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/dab-rest-and-graphql/SKILL.md",
+      "computedHash": "074b5b4f3e33416b8b90fb1f3a442eef12f9faaa710f049ccfa6844c0602e443"
+    },
+    "database-config-azuresql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/database-config-azuresql/SKILL.md",
+      "computedHash": "517e91e41521f0bf2dfe04418aa864ef38f5642f1ab8eebe8ec09274da4bf4e9"
+    },
+    "database-settings-review": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/database-settings-review/SKILL.md",
+      "computedHash": "82872311940899d819e09a75f026d21c5cc0356384616e8c7ebe7ee8b3686500"
+    },
+    "databasehub-cli": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-fdh/skills/databasehub-cli/SKILL.md",
+      "computedHash": "3e9798d0b26910e7b209b1738bb0543232d03223d06666ec9eac317f7968f73c"
+    },
+    "deadlock-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/deadlock-analysis/SKILL.md",
+      "computedHash": "64074e906aa24b06b3cb9764242846b67d294803d4c3f421e442c3ec45ac9b18"
+    },
+    "deadlock-analysis-azuresql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/deadlock-analysis-azuresql/SKILL.md",
+      "computedHash": "9eb0708e850f0679e09119a8241ffa641f57ff7a5f1613a8d980641ef816f029"
+    },
+    "deploy-app-to-azure": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/deploy-app-to-azure/SKILL.md",
+      "computedHash": "521bcf913ce1ef706b95c6ae72188944e7c462c69ebb455de7365c5a5d018fba"
+    },
+    "deploy-dab-to-azure": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/deploy-dab-to-azure/SKILL.md",
+      "computedHash": "5343028d6b1761508f8b757fed8ff794a01a133d5c3e746a9e2baf053bef86c1"
+    },
+    "design-azure-sql-schema": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/design-azure-sql-schema/SKILL.md",
+      "computedHash": "3b599adf03490f113b678ee02dbf668ca75f61a9575dc4500e126ff0102079db"
+    },
+    "dev-container-templates": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/dev-container-templates/SKILL.md",
+      "computedHash": "fc32e690b6c42c8a72c4c6bbb88a008f077e47366bf83b24484775c5ed929bdc"
+    },
+    "ef-core-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/ef-core-azure-sql/SKILL.md",
+      "computedHash": "e3012714d28d3925f22a38ef260849706597e693466f49ac05a3ab759dcfa9cf"
+    },
+    "embeddings-and-external-models": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/embeddings-and-external-models/SKILL.md",
+      "computedHash": "0b4ae80ee643b4ebfc2ac91776032598bc2f72075b5528e03c64ba7e18d5dc95"
+    },
+    "entra-id-auth": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/entra-id-auth/SKILL.md",
+      "computedHash": "9b8590b1f08d7c31ac4802094c012ca9681a183cac1f4ad3f339bba81e1d317c"
+    },
+    "evaluate-azure-migration-assessment": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/evaluate-azure-migration-assessment/SKILL.md",
+      "computedHash": "6e6c9709d3a05a0060701376bc72a27e3ffc955d9fd552f19f229caaf9423583"
+    },
+    "evaluate-offline-migration-readiness": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/evaluate-offline-migration-readiness/SKILL.md",
+      "computedHash": "0779e90e63d194d4e607ae4dcc1cad0914cd328694c033c46188ec54ca26a45b"
+    },
+    "generate-migration-prerequisite-plan": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/generate-migration-prerequisite-plan/SKILL.md",
+      "computedHash": "48a2b5f363f146f22357abd1879773ec2d10ccac20be2ba30fa445a095a6d443"
+    },
+    "geo-dr-assessment-health-check": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/geo-dr-assessment-health-check/SKILL.md",
+      "computedHash": "293ecb95fec9cbb47e107d520b177db11a9c7ac9f671754c7351872b760f5b85"
+    },
+    "get-migration-assessment": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/get-migration-assessment/SKILL.md",
+      "computedHash": "f04838c055dae42764c1d1fb33b443b877e2c1d70aab5a81d59d6fa50aa425e7"
+    },
+    "github-actions-for-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/github-actions-for-sql/SKILL.md",
+      "computedHash": "e885f6f8fa2510ea59f63cd5f6ce17c72fefbd5f5401cf94d08f3cda41816773"
+    },
+    "ha-assessment-health-check": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/ha-assessment-health-check/SKILL.md",
+      "computedHash": "fc969b1bd5ddfd51e24982da099e738169f26e8ea991da6c281b2e8470106168"
+    },
+    "health-audit-sqlserver": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/health-audit-sqlserver/SKILL.md",
+      "computedHash": "b4557af047a7e57a63f4e2f6342b92d70316b49dc4d04d484ee0a2c03db97c2b"
+    },
+    "improve-query-performance": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/improve-query-performance/SKILL.md",
+      "computedHash": "678bea7d8ea6a6992f55e526f94fe9dec3d2020e1457ee092486f0c950965ab5"
+    },
+    "investigate-geo-dr-issues": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-geo-dr-issues/SKILL.md",
+      "computedHash": "bbd88491a49c8a4133e6a81663d7716922bbcd4f73ba54e22e50304c8711e15e"
+    },
+    "investigate-ha-issues": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-ha-issues/SKILL.md",
+      "computedHash": "5f87ecae7ec3b45c6d3006b9a40663df940178c5b67bb755d1fd66969fc5532c"
+    },
+    "investigate-sql-cpu-pressure": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-sql-cpu-pressure/SKILL.md",
+      "computedHash": "0b03e2c736e59f45648cd0a4a9dbfaeb697a405b6b63ed4ccdafc2d2d95fb0ad"
+    },
+    "investigate-sql-data-io-pressure": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-sql-data-io-pressure/SKILL.md",
+      "computedHash": "76876ed17598a905d168adeaf42ffa49c92df111a27e46a8e985be768e99598b"
+    },
+    "investigate-sql-log-io-pressure": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-sql-log-io-pressure/SKILL.md",
+      "computedHash": "64f56e2d3f59449279d6dbc4dcfcd2a258a6f804ff57e2895e1de312605e2e35"
+    },
+    "investigate-sql-memory-issues": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-sql-memory-issues/SKILL.md",
+      "computedHash": "6f7873e2cce72c4c4b6359d861744ad886396296799b4edb68ff90bdc2cd1f70"
+    },
+    "investigate-statistics-issues": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/investigate-statistics-issues/SKILL.md",
+      "computedHash": "0bb4eb072b4bbdf5a0798ee7b527cd8c3b8fe4c6e0b69737b1510578695dc718"
+    },
+    "langchain-and-llamaindex-on-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/langchain-and-llamaindex-on-azure-sql/SKILL.md",
+      "computedHash": "bc568c07d847ad3728fd8ff93459315ad42c25160430fc7affe4394e9452b555"
+    },
+    "ledger-tables": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/ledger-tables/SKILL.md",
+      "computedHash": "54a152d7d8629fd013d7946292b407933c0ac9dc70616a5484313a44b2c169a5"
+    },
+    "missing-index-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/missing-index-analysis/SKILL.md",
+      "computedHash": "90f18821e5f6d370cdf67174deb91d82c281388d04dcb367e44f6aae095b30b9"
+    },
+    "partitioned-tables": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/partitioned-tables/SKILL.md",
+      "computedHash": "b2846b482a2f3bdbbb8fbf7bbbb364c5aeff985b395b7f03992e845e5e4ad223"
+    },
+    "plan-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/plan-analysis/SKILL.md",
+      "computedHash": "e06cbe4f915ccc5af9b408765fbb1443f62424c988486a0454b6b6d0394f8c4b"
+    },
+    "plan-cache-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/plan-cache-analysis/SKILL.md",
+      "computedHash": "57b499ef99b7e8723e30e0883967895d02b07005ff52f36d11124709b714394d"
+    },
+    "plan-cache-qds-bridge": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/plan-cache-qds-bridge/SKILL.md",
+      "computedHash": "c7703520e4ef03ce53275d1d6e509dbd954d0124017d57853cba9a167507567b"
+    },
+    "prevent-sql-injection": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/prevent-sql-injection/SKILL.md",
+      "computedHash": "5816e4510f7b9eeca08177c97caf91712602c3a6f6bf2bf6bec2bea32b3f7bb6"
+    },
+    "prisma-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/prisma-azure-sql/SKILL.md",
+      "computedHash": "1fc7fb899d6846096763aa8240d4e8b44838d95316481625c34880d15e0e3012"
+    },
+    "provision-azure-sql-db": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/provision-azure-sql-db/SKILL.md",
+      "computedHash": "20ec114de9dedeb4c6ec825328e6b1935ea1785d0341f37c38cfc23ae5b99863"
+    },
+    "provision-hyperscale": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/provision-hyperscale/SKILL.md",
+      "computedHash": "0779d4fa0c4505295defa87d7f3aab7c27eb5df45d9f7dc30b58fa703adc9ed7"
+    },
+    "query-hint-tuning": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/query-hint-tuning/SKILL.md",
+      "computedHash": "e003b4db205bd0446360018451d016e7f148e09a885a428ec211679bbb31c77d"
+    },
+    "query-rewrite": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/query-rewrite/SKILL.md",
+      "computedHash": "b9621f8e1b162789e2ad2a8fd2fc0f0ab35019083cf7c9ba01cd5ff02f53a65d"
+    },
+    "query-store-investigation": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/query-store-investigation/SKILL.md",
+      "computedHash": "847c6a35acc980be307073b11fa234840d1285517f8bf06ddee81ccd4b3b90d3"
+    },
+    "query-store-volatile-historical-slow-queries-comparison": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/query-store-volatile-historical-slow-queries-comparison/SKILL.md",
+      "computedHash": "c6115a19e6dfd7455b65c9e8889cbff6da6dbc18bc3d5acc26460d8471513dd2"
+    },
+    "rag-local-with-container": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/rag-local-with-container/SKILL.md",
+      "computedHash": "f917f2e9b4834df51e1fe04359ad01cbd901365b1c597353340caa23d1cb03e7"
+    },
+    "rag-on-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/rag-on-azure-sql/SKILL.md",
+      "computedHash": "f66fab6dd68377a02d7b33319539e32e1b3d71108005ab9d056190696174ed91"
+    },
+    "read-execution-plan": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/read-execution-plan/SKILL.md",
+      "computedHash": "0f75b3605c7c3a05fda72e2d9f289b50ec5fa01d8109e193ff59a09072d868f2"
+    },
+    "recommend-migration-path": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/recommend-migration-path/SKILL.md",
+      "computedHash": "327dfd190a3855e1cbc7f6c75ff7de71acff7e1b0710631038536ab2bc8f1eca"
+    },
+    "recommend-sku-sizing": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/recommend-sku-sizing/SKILL.md",
+      "computedHash": "5f79f4bd8f09217de9b20642830d8d938d620cd44aa5b7e6920bb8fdef826b07"
+    },
+    "resource-usage-sqlserver": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/resource-usage-sqlserver/SKILL.md",
+      "computedHash": "520d33abc47b210eba23fbb1d7b3aa8eea52df8c89980f6e11281291abccbf18"
+    },
+    "restore-and-recover": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/restore-and-recover/SKILL.md",
+      "computedHash": "2b150f948004581b9b41c9b4d176ef805bdbeaf3179ac265098645c1778e63e7"
+    },
+    "rls-multi-tenant": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/rls-multi-tenant/SKILL.md",
+      "computedHash": "539ca3c32e635e08f2e7eae8cb7b15219d6ba58a68a69d2fa62dbc4e4c3002fd"
+    },
+    "run-migration-assessment": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/run-migration-assessment/SKILL.md",
+      "computedHash": "9d64baab18113a2f750096c4f88add0f6c74a0a06c19bdfcc403c975c639e660"
+    },
+    "schema-design-guidance": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/schema-design-guidance/SKILL.md",
+      "computedHash": "267b9d3b7854ab4837508d5bfc874da2bcf80e7a741880780503da01a696ffbd"
+    },
+    "schema-migrations-safely": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/schema-migrations-safely/SKILL.md",
+      "computedHash": "d780b6499acfd7513527bb7abc96a1214a365cc9703e6ca089e1b83aa057805e"
+    },
+    "skill-feedback": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/skill-feedback/SKILL.md",
+      "computedHash": "5120ac9396e36210f91899dd006bc174be392a131e627b42740bf097a998e260"
+    },
+    "slow-query-investigation": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/slow-query-investigation/SKILL.md",
+      "computedHash": "735f124f7fa575751e6c3da630668ef2bf788093dde5db47bafeac2849d47f1b"
+    },
+    "sql-admin-analyze-readiness-at-scale": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/sql-admin-analyze-readiness-at-scale/SKILL.md",
+      "computedHash": "d2cb63d736c19b3662820b1500bac8406abc9d2ff1c68664ee6267cba9d463fa"
+    },
+    "sql-admin-evaluate-azure-migration-assessment": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/sql-admin-evaluate-azure-migration-assessment/SKILL.md",
+      "computedHash": "57d6047d3885568729078fd45a7428f9b1f9aea976c37d5765f3aaa0f34658fe"
+    },
+    "sql-admin-get-migration-assessment": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/sql-admin-get-migration-assessment/SKILL.md",
+      "computedHash": "495c3b48246852dcccc9350639f8cc7c32a52a3ee5e457c0d44e1efb5c84c176"
+    },
+    "sql-agent-job-failure-investigator": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/sql-agent-job-failure-investigator/SKILL.md",
+      "computedHash": "2ddaebf2397a075c369d37100e2e803d6b1dfaeeb2ed8f5fc7670cb2b6d92afb"
+    },
+    "sql-backup-restore-to-azure-sql-vm-migration": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/sql-backup-restore-to-azure-sql-vm-migration/SKILL.md",
+      "computedHash": "a3172557abc805d8cf8f03c4b66ae3b440155a7f3b436551ace7a4b17bb52746"
+    },
+    "sql-bacpac-to-azure-sql-db-migration": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/sql-bacpac-to-azure-sql-db-migration/SKILL.md",
+      "computedHash": "f1f44253ce884d8ebdee29210f98e3976563ad7c24a4a826d956b8fc0a27cab5"
+    },
+    "sql-database-projects": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/sql-database-projects/SKILL.md",
+      "computedHash": "0ab514ee8023ee3b4554ad8f26cd22b2041fb26bfe71ede236192dd7dfb0616c"
+    },
+    "sql-server-to-sql-mi-lrs-migration": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/sql-server-to-sql-mi-lrs-migration/SKILL.md",
+      "computedHash": "35f72a9a4112cc237671bfc4f4b195bcea4ef6540e6b2cccc483b2d4506e3b2b"
+    },
+    "sql-tools-mcp-setup": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/sql-tools-mcp-setup/SKILL.md",
+      "computedHash": "61c6bc03283983c5af9bae85de2ad8339d6848ca02d041ca4382f8e109dabbf2"
+    },
+    "sqlalchemy-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/sqlalchemy-azure-sql/SKILL.md",
+      "computedHash": "03a043d951cc50c88e2418f276a1d505980a78244a5a9c2786c23dc367e4ea25"
+    },
+    "sqlpackage-import-export": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/sqlpackage-import-export/SKILL.md",
+      "computedHash": "80c980d01852fd596108b0d92d12f87f01c975f094c86efe7c84750f1dd23208"
+    },
+    "t-sql-correctness": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/t-sql-correctness/SKILL.md",
+      "computedHash": "13202903263bcdcde2670c5a09ecdffd734791d9c647bba6af7fe6f9d191a086"
+    },
+    "t-sql-json-and-openjson": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/t-sql-json-and-openjson/SKILL.md",
+      "computedHash": "7c56e4ab5e091b452a1928d8a99196e76b1eb9160234bcb85abaf8ee5327faed"
+    },
+    "t-sql-upserts-merge": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/t-sql-upserts-merge/SKILL.md",
+      "computedHash": "dd264728f071742680487ffaad553662af1e5b6ee69122eeba077bc9678f4b35"
+    },
+    "table-access-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/table-access-analysis/SKILL.md",
+      "computedHash": "aeddc2eb4b7ace18a28caa2b32c773cd848f7b1e4417c4d62d2eae6e4d454b1b"
+    },
+    "table-health-check": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/table-health-check/SKILL.md",
+      "computedHash": "3239fe10d6021d3e40ab4781d176a5ae7ddb3e38b8af9195bef8ab64c1bc11a1"
+    },
+    "top-queries-noqds": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/top-queries-noqds/SKILL.md",
+      "computedHash": "a1be8787fc67bfa77122dbd9f53c0c808555bc03f8f500d8322db1fafa3d6893"
+    },
+    "validate-post-migration-data": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-migration/skills/validate-post-migration-data/SKILL.md",
+      "computedHash": "dd3ab1a171f0ee2e62688fbb8c93dbda753770d0c95561e00a909a61554221f9"
+    },
+    "vector-search-azure-sql": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql/skills/vector-search-azure-sql/SKILL.md",
+      "computedHash": "a3a5203a70b0b4c675e350904796cf7fed841553a27fbf025f95a0519b342ba4"
+    },
+    "wait-category-analysis": {
+      "source": "microsoft/microsoft-sql",
+      "commit": "3224561abf68c98c1ab47e27d2a06e30acdd330a",
+      "sourceType": "github",
+      "skillPath": "plugins/microsoft-sql-admin/skills/wait-category-analysis/SKILL.md",
+      "computedHash": "a686ef090bb744e05a5198b2cb5af1d27b07e221e45bfe6c4d2f20332a7e0ff6"
+    }
+  }
+}

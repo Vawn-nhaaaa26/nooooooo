@@ -49,6 +49,25 @@ npm run migrate:sqlserver
 
 Lệnh này nhập dữ liệu từ `data/bkspacetech.sqlite` vào SQL Server, cập nhật các bản ghi trùng khóa và không xóa dữ liệu chỉ có ở SQL Server. Sao lưu database trước khi nhập. Nếu bảng `dbo.users` còn trống, ứng dụng tạo whitelist ban đầu từ danh sách mặc định trong `server.mjs`; audit log lịch sử được nhập từ SQLite.
 
+Để xuất dữ liệu SQL Server thành các collection JSON tương thích MongoDB, chạy:
+
+```powershell
+npm run export:mongodb
+```
+
+Mỗi bảng được xuất thành một tệp trong `data/mongodb-export/`; ngày giờ dùng MongoDB Extended JSON và các cột JSON được chuyển thành object. Đây chỉ là bản xuất, ứng dụng vẫn đọc/ghi SQL Server.
+
+Để nhập các tệp này lên MongoDB Atlas:
+
+1. Đặt `MONGODB_URI` trong `.env` cục bộ bằng URI lấy từ Atlas, thay mật khẩu giữ chỗ bằng mật khẩu thật và mã hóa URL các ký tự đặc biệt. Không gửi URI hoặc commit `.env`.
+2. Tại thư mục dự án, chạy lệnh sau trong PowerShell:
+
+```powershell
+npm run import:mongodb
+```
+
+Lệnh này đọc MongoDB Extended JSON, giữ đúng kiểu ngày giờ, rồi upsert các tài liệu theo `_id`. Không cần dán mã JavaScript vào PowerShell hoặc cài `mongoimport`. Tệp xuất có email và nhật ký hoạt động; không commit hoặc chia sẻ công khai chúng.
+
 `cms_state` lưu trạng thái CMS có kiểm soát xung đột; các bảng nội dung chuẩn hóa, users, roles, permissions và audit_logs đều nằm trong SQL Server. Bài viết/hoạt động và đào tạo mới được đăng theo quyền hiện hành.
 
 ## Whitelist và phân quyền
