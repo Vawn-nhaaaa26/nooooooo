@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "google-auth-library": "^11.3.4",
-    "mongodb": "^7.9.0"
+    "mongodb": "^7.9.0",
+    "msnodesqlv8": "^6.2.2",
+    "mssql": "^12.7.14"
   }
 }
