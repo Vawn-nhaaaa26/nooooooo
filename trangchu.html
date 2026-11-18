@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BK SpaceTech — Trang chủ Câu lạc bộ Công nghệ Vũ trụ Bách khoa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer onload="window.dispatchEvent(new Event('google-gsi-ready'))"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Be Vietnam Pro', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
+    .starfield-bg {
+      background-color: #040711;
+      background-image:
+        radial-gradient(circle at 18% 20%, rgba(37, 99, 235, 0.18) 0%, transparent 42%),
+        radial-gradient(circle at 82% 15%, rgba(14, 165, 233, 0.14) 0%, transparent 38%),
+        radial-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px;
+    }
+    .orbital-ring { animation: spinSlow 36s linear infinite; }
+    .orbital-ring-reverse { animation: spinSlowReverse 28s linear infinite; }
+    @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes spinSlowReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float { animation: floatSlow 5s ease-in-out infinite; }
+    @keyframes modalPop {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-pop { animation: modalPop 0.2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-[#040711] text-slate-200 font-sans antialiased selection:bg-sky-500 selection:text-slate-950">
+
+  <div id="public-portal-view">
+  <!-- THANH ĐIỀU HƯỚNG TRANG CHỦ + NÚT DASHBOARD -->
+  <header class="sticky top-0 z-40 bg-[#040711]/85 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <a href="trangchu.html" class="flex items-center gap-3 group shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-600/25 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="text-white font-extrabold tracking-wider text-sm sm:text-base leading-none">BK SPACETECH</div>
+          <div class="text-[10px] font-mono text-sky-400 tracking-widest uppercase mt-1">HUST AEROSPACE CLUB</div>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <a href="#about" class="hover:text-sky-400 transition-colors">Giới thiệu</a>
+        <a href="#spacelab" class="hover:text-sky-400 transition-colors">Space Lab</a>
+        <a href="#spacenews" class="hover:text-sky-400 transition-colors">Space News</a>
+        <a href="#activities" class="hover:text-sky-400 transition-colors">Hoạt động & Đào tạo</a>
+        <a href="#team" class="hover:text-sky-400 transition-colors">Ban Chủ nhiệm</a>
+        <a href="#contact" class="hover:text-sky-400 transition-colors">Liên hệ</a>
+        <span id="nav-dashboard-slot"></span>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openJoinClubModal()" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all cursor-pointer shadow-md shadow-blue-600/25">
+          <span>Gia nhập CLB</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </button>
+        <button onclick="toggleMobileNav()" class="lg:hidden p-2 rounded-xl border border-slate-800 text-slate-300 hover:bg-slate-800 cursor-pointer" aria-label="Menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-800 bg-[#080E1E] px-4 py-3 space-y-2 text-xs font-semibold">
+      <a href="#about" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Giới thiệu CLB</a>
+      <a href="#spacelab" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Dự án Space Lab</a>
+      <a href="#spacenews" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Tin tức Space News</a>
+      <a href="#activities" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Hoạt động & Đào tạo</a>
+      <a href="#team" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Ban Chủ nhiệm & Các ban</a>
+      <a href="#contact" onclick="toggleMobileNav()" class="block py-2 text-slate-300 hover:text-sky-400">Đối tác & Liên hệ</a>
+      <div id="mobile-dashboard-slot"></div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="top" class="starfield-bg relative overflow-hidden border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-sky-500/30 text-xs font-mono text-sky-300">
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+            <span>TELEMETRY SYNC: ACTIVE • LOCALHOST LIVE</span>
+          </div>
+          <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]"></h1>
+          <p id="hero-intro" class="text-sm sm:text-base text-slate-300/90 leading-relaxed max-w-2xl"></p>
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a href="#spacelab" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-blue-600/30 transition-all">
+              <i data-lucide="rocket" class="w-4 h-4"></i> Khám phá Space Lab
+            </a>
+            <a href="#spacenews" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sky-300 text-xs sm:text-sm font-bold transition-all">
+              <i data-lucide="newspaper" class="w-4 h-4"></i> Tin tức Space News
+            </a>
+          </div>
+          <div id="hero-metrics" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800/80"></div>
+        </div>
+
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border border-dashed border-sky-500/30 orbital-ring"></div>
+            <div class="absolute inset-6 rounded-full border border-blue-500/25 orbital-ring-reverse"></div>
+            <div class="relative z-10 text-center animate-float">
+              <svg class="w-32 h-32 sm:w-36 sm:h-36 mx-auto drop-shadow-[0_0_25px_rgba(56,189,248,0.35)]" viewBox="0 0 120 120" fill="none">
+                <circle cx="60" cy="60" r="46" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
+                <path d="M60 16C60 16 40 38 40 66C40 75 45 82 52 85V96L60 90L68 96V85C75 82 80 75 80 66C80 38 60 16 60 16Z" fill="#1D4ED8" stroke="#7DD3FC" stroke-width="2"/>
+                <circle cx="60" cy="52" r="8" fill="#080E1E" stroke="#38BDF8" stroke-width="2"/>
+                <path d="M40 66L28 78V86L40 81M80 66L92 78V86L80 81" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M54 96C54 96 57 106 60 108C63 106 66 96 66 96" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <div class="mt-2 px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-700/80 font-mono text-[11px] text-sky-300 inline-block">
+                ALT: 24.5 KM • THRUST: 450N
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIỚI THIỆU -->
+  <section id="about" class="py-16 sm:py-20 border-b border-slate-800/70 bg-[#060B18]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-10">
+        <span class="font-mono text-xs font-bold uppercase tracking-widest text-sky-400">01 // Về chúng tôi</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Định hướng & Sứ mệnh Hàng không Vũ trụ</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-2">Tầm nhìn (Vision)</h3>
+          <p id="about-vision" class="text-xs sm:text-sm text-slate-400 leading-relaxed"></p>
+        </div>
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-2">Sứ mệnh (Mission)</h3>
+          <p id="about-mission" class="text-xs sm:text-sm text-slate-400 leading-relaxed"></p>
+        </div>
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-2">Lĩnh vực Nghiên cứu Cốt lõi</h3>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Thiết kế & chế tạo vệ tinh mô phỏng CanSat/CubeSat, máy bay không người lái UAV, động cơ tên lửa thực nghiệm và hệ thống trạm mặt đất Ground Station.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACE LAB -->
+  <section id="spacelab" class="py-16 sm:py-20 border-b border-slate-800/70 bg-[#040711]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase tracking-widest text-sky-400">02 // Space Lab R&D</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Dự án Nghiên cứu & Chế tạo</h2>
+        </div>
+        <div id="project-filter-bar" class="flex flex-wrap bg-[#0B1224] p-1 rounded-xl border border-slate-800 text-xs font-semibold gap-1"></div>
+      </div>
+      <div id="public-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- SPACE NEWS -->
+  <section id="spacenews" class="py-16 sm:py-20 border-b border-slate-800/70 bg-[#060B18]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase tracking-widest text-sky-400">03 // Space News & Publications</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Bản tin & Ấn phẩm Chuyên ngành</h2>
+        </div>
+        <div id="news-category-bar" class="flex flex-wrap bg-[#0B1224] p-1 rounded-xl border border-slate-800 text-xs font-semibold gap-1"></div>
+      </div>
+      <div id="public-news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- HOẠT ĐỘNG & ĐÀO TẠO -->
+  <section id="activities" class="py-16 sm:py-20 border-b border-slate-800/70 bg-[#040711]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8">
+        <span class="font-mono text-xs font-bold uppercase tracking-widest text-sky-400">04 // Activities & Training</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Sự kiện & Đào tạo Chuyên môn</h2>
+      </div>
+      <div id="public-activities-list" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    </div>
+  </section>
+
+  <!-- BAN CHỦ NHIỆM -->
+  <section id="team" class="py-16 sm:py-20 border-b border-slate-800/70 bg-[#060B18]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-10">
+        <span class="font-mono text-xs font-bold uppercase tracking-widest text-sky-400">05 // Organization & Leadership</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Ban Chủ nhiệm & Các Ban Hoạt động</h2>
+      </div>
+      <div id="public-team-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact" class="bg-[#040711] pt-14 pb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="pb-10 border-b border-slate-800/80">
+        <div id="public-sponsors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      </div>
+      <div class="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-slate-400">
+        <div id="footer-contact-info" class="space-y-1"></div>
+        <div class="font-mono text-sky-400/80">© 2026 BK SpaceTech — Localhost CMS Sync</div>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+  <div id="toast-container" class="fixed bottom-5 left-5 z-[60] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+  <div id="dashboard-password-dialog" class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-labelledby="dashboard-password-title">
+    <form onsubmit="submitDashboardPassword(event)" class="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 space-y-4">
+      <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+      <div>
+        <h2 id="dashboard-password-title" class="text-lg font-extrabold text-slate-900">Mở khóa Dashboard</h2>
+        <p id="dashboard-password-account" class="mt-1 text-xs text-slate-500"></p>
+        <p class="mt-2 text-sm text-slate-600">Tài khoản Google đã được cấp quyền. Nhập mật khẩu Dashboard để tiếp tục.</p>
+      </div>
+      <label class="block text-xs font-bold text-slate-700">Mật khẩu
+        <input id="dashboard-password-input" type="password" required autocomplete="current-password" class="mt-1.5 w-full border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500" />
+      </label>
+      <p id="dashboard-password-error" class="hidden text-xs font-semibold text-rose-600" role="alert"></p>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeDashboardPasswordDialog()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50">Hủy</button>
+        <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Vào Dashboard</button>
+      </div>
+    </form>
+  </div>
+  <div id="dashboard-portal-view" class="fixed inset-0 z-[70] hidden bg-[#F8FAFC]">
+    <iframe id="dashboard-frame" title="BK SpaceTech Admin Dashboard" class="w-full h-full border-0" loading="eager"></iframe>
+  </div>
+
+  <script>
+    const DB_STORAGE_KEY = 'BKSPACETECH_CMS_DB_V1';
+    function escapeHTML(str) {
+      return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    const GOOGLE_SVG_ICON = `<svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>`;
+
+    function getDefaultCMSData() {
+      return {
+        baselineCounts: { posts: 18, projects: 2, activities: 8, members: 24 },
+        authorizedEmails: [
+          { id: 'WL-01', email: 'quan.nm@bkspacetech.com', name: 'Nguyễn Minh Quân', role: 'admin', department: 'Ban Chủ nhiệm', isActive: true, lastLogin: '17/11/2026 19:10' },
+          { id: 'WL-02', email: 'kiet.lt225034@sis.hust.edu.vn', name: 'Lê Tuấn Kiệt', role: 'department_head', department: 'Ban Space Lab', isActive: true, lastLogin: '17/11/2026 14:20' },
+          { id: 'WL-03', email: 'ha.pt236411@sis.hust.edu.vn', name: 'Phạm Thu Hà', role: 'delegated_member', department: 'Ban Truyền thông', isActive: true, lastLogin: '17/11/2026 16:40' },
+          { id: 'WL-04', email: 'cuu.thanhvien@gmail.com', name: 'Phạm Văn Cựu (Đã khóa)', role: 'delegated_member', department: 'Ban Truyền thông', isActive: false, lastLogin: '01/09/2026 08:00' }
+        ],
+        siteSettings: {
+          clubTitle: 'Kiến tạo Công nghệ Hàng không Vũ trụ từ Giảng đường Bách khoa',
+          shortIntro: 'BK SpaceTech là cộng đồng sinh viên đam mê nghiên cứu, thiết kế và chế tạo vệ tinh mô phỏng CanSat, máy bay không người lái UAV và động cơ tên lửa thực nghiệm.',
+          vision: 'Trở thành câu lạc bộ nghiên cứu công nghệ hàng không vũ trụ sinh viên hàng đầu Việt Nam, nơi ươm mầm các kỹ sư không gian tương lai.',
+          mission: 'Kết nối đam mê, đào tạo kỹ thuật chuyên sâu từ thực tiễn và hiện thực hóa các sản phẩm công nghệ vũ trụ mang dấu ấn sinh viên Bách khoa.',
+          email: 'contact@bkspacetech.com',
+          address: 'Tòa nhà B1, Đại học Bách khoa Hà Nội, Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội',
+          facebook: 'https://facebook.com/bkspacetech'
+        },
+        projects: [
+          { id: 'PRJ-01', name: 'Tên lửa thực nghiệm tầm thấp BK-R1', department: 'Ban Space Lab', lead: 'Nguyễn Đức Anh', membersCount: 8, progress: 65, status: 'in_progress', artType: 'rocket', summary: 'Nghiên cứu động cơ nhiên liệu rắn composite, vòi phun de Laval chịu nhiệt và máy tính bay ghi dữ liệu gia tốc đa trục.', result: 'Hoàn tất 3 lần thử nghiệm tĩnh đạt lực đẩy cực đại 450N trong 4.2 giây.' },
+          { id: 'PRJ-02', name: 'Vệ tinh mô phỏng CanSat BK-02', department: 'Ban Space Lab', lead: 'Lê Tuấn Kiệt', membersCount: 6, progress: 100, status: 'completed', artType: 'satellite', summary: 'Vệ tinh kích thước tiêu chuẩn đo áp suất, nhiệt độ khí quyển, định vị GPS và cơ cấu bung dù giảm tốc tự động ở độ cao 500m.', result: 'Đạt giải Nhì cuộc thi CanSat Quốc gia 2026 với tỷ lệ thu gói tin telemetry 99.4%.' },
+          { id: 'PRJ-03', name: 'UAV Trinh sát tầm trung BK-UAV04', department: 'Ban Space Lab', lead: 'Vũ Hải Đăng', membersCount: 7, progress: 82, status: 'testing', artType: 'uav', summary: 'Máy bay không người lái cánh bằng sải cánh 2.2m, tích hợp autopilot Pixhawk và truyền dữ liệu hình ảnh thời gian thực.', result: 'Bay thử nghiệm ổn định 25 phút liên tục, tầm kiểm soát đạt 8km.' }
+        ],
+        posts: [
+          { id: 'POST-101', title: 'Thử nghiệm tĩnh động cơ tên lửa nhiên liệu rắn BK-R1 đạt lực đẩy 450N', category: 'Space News', department: 'Ban Space Lab', author: 'Lê Tuấn Kiệt', status: 'published', publishedAt: '17/11/2026', updatedAt: '17/11/2026 14:15', views: 342, artType: 'rocket', excerpt: 'Nhóm nghiên cứu động cơ đẩy thuộc Ban Space Lab vừa hoàn tất đợt thử nghiệm tĩnh lần thứ 3 cho mẫu động cơ BK-R1.', content: 'Dữ liệu cảm biến Loadcell ghi nhận lực đẩy cực đại đạt 450N trong thời gian cháy ổn định 4.2 giây.', reviewNote: '', revisions: [] },
+          { id: 'POST-102', title: 'Tổng kết cuộc thi CanSat Quốc gia 2026: Đội BK-Orbit giành giải Nhì toàn quốc', category: 'Space News', department: 'Ban Space Lab', author: 'Trần Hoàng Nam', status: 'published', publishedAt: '15/11/2026', updatedAt: '15/11/2026 20:30', views: 518, artType: 'satellite', excerpt: 'Vượt qua hơn 40 đội thi toàn quốc, vệ tinh mô phỏng CanSat BK-02 đã hoàn thành xuất sắc nhiệm vụ.', content: 'Trạm mặt đất tự chế tạo của CLB đã thu nhận 99.4% gói tin telemetry theo thời gian thực.', reviewNote: '', revisions: [] },
+          { id: 'POST-104', title: 'Bản tin Space News #14: Công nghệ tái sử dụng tầng đẩy tên lửa quỹ đạo thấp', category: 'Kiến thức Vũ trụ', department: 'Ban Truyền thông', author: 'Phạm Thu Hà', status: 'published', publishedAt: '18/11/2026', updatedAt: '17/11/2026 16:40', views: 0, artType: 'orbit', excerpt: 'Phân tích kỹ thuật hạ cánh thẳng đứng (VTVL) và điều khiển vector lực đẩy.', content: 'Bài viết tổng hợp nguyên lý điều khiển khí động học bằng cánh lưới (Grid Fins).', reviewNote: '', revisions: [] }
+        ],
+        activities: [
+          { id: 'ACT-01', title: 'Khóa đào tạo Nhập môn Kỹ thuật Hàng không & Mô phỏng UAV', type: 'training', typeLabel: 'Đào tạo chuyên môn', department: 'Ban Chuyên môn', date: '22/11/2026 • 14:00', location: 'Hội trường B1 - ĐH Bách khoa', status: 'published', registered: 65, capacity: 80 },
+          { id: 'ACT-02', title: 'Space Talk 2026: Hành trình đưa vệ tinh Việt Nam lên quỹ đạo', type: 'event', typeLabel: 'Sự kiện CLB', department: 'Ban Truyền thông', date: '29/11/2026 • 08:30', location: 'Hội trường lớn C2', status: 'published', registered: 142, capacity: 200 }
+        ],
+        members: [
+          { id: 'MEM-01', initials: 'HN', fullName: 'Trần Hoàng Nam', studentId: '20224108', position: 'Chủ nhiệm CLB', department: 'Ban Chủ nhiệm', generation: 'Gen 5: 2025–2026', email: 'nam.th224108@sis.hust.edu.vn', isExecutive: true },
+          { id: 'MEM-02', initials: 'TK', fullName: 'Lê Tuấn Kiệt', studentId: '20225034', position: 'Phó Chủ nhiệm / Lead Space Lab', department: 'Ban Space Lab', generation: 'Gen 5: 2025–2026', email: 'kiet.lt225034@sis.hust.edu.vn', isExecutive: true },
+          { id: 'MEM-03', initials: 'MC', fullName: 'Đỗ Minh Châu', studentId: '20233192', position: 'Trưởng ban Chuyên môn', department: 'Ban Chuyên môn', generation: 'Gen 5: 2025–2026', email: 'chau.dm233192@sis.hust.edu.vn', isExecutive: true },
+          { id: 'MEM-04', initials: 'TH', fullName: 'Phạm Thu Hà', studentId: '20236411', position: 'Trưởng ban Truyền thông', department: 'Ban Truyền thông', generation: 'Gen 5: 2025–2026', email: 'ha.pt236411@sis.hust.edu.vn', isExecutive: true },
+          { id: 'MEM-05', initials: 'GB', fullName: 'Ngô Gia Bảo', studentId: '20231875', position: 'Trưởng ban Đối ngoại', department: 'Ban Đối ngoại', generation: 'Gen 5: 2025–2026', email: 'bao.ng231875@sis.hust.edu.vn', isExecutive: true }
+        ],
+        media: [
+          { id: 'MED-01', name: 'static-fire-test-bkr1.jpg', folder: 'projects', dimensions: '1920 × 1080', size: '2.4 MB', uploadedAt: '17/11/2026', type: 'rocket', url: 'https://cdn.bkspacetech.com/media/projects/static-fire-test-bkr1.jpg' }
+        ],
+        sponsors: [
+          { id: 'SP-01', name: 'Viện Công nghệ Vũ trụ (STI)', tier: 'Đối tác Chuyên môn', website: 'https://sti.vast.vn', active: true },
+          { id: 'SP-02', name: 'Viettel Aerospace Institute', tier: 'Nhà tài trợ Kim cương', website: 'https://viettel.com.vn', active: true },
+          { id: 'SP-03', name: 'Altium Vietnam Education', tier: 'Tài trợ Phần mềm CAD/PCB', website: 'https://altium.com', active: true },
+          { id: 'SP-04', name: 'Quỹ Sáng tạo Sinh viên BK', tier: 'Nhà tài trợ Vàng', website: 'https://hust.edu.vn', active: true }
+        ],
+        auditLogs: [
+          { id: 'LOG-01', actor: 'Phạm Thu Hà', role: 'Thành viên ủy quyền', action: 'Đăng bài viết "Bản tin Space News #14"', type: 'publish', time: '16:40 hôm nay' }
+        ]
+      };
+    }
+
+    function loadCMSData() {
+      try { const raw = localStorage.getItem(DB_STORAGE_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+      const init = getDefaultCMSData();
+      localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(init));
+      return init;
+    }
+    function saveCMSData(db) { try { localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db)); } catch (e) {} }
+    let cmsDB = loadCMSData();
+    let authSession = { googleEmail: '', googleName: '', role: '' };
+    let googleClientId = '';
+    let googleSignInInitialized = false;
+    let googleLibraryReady = false;
+    let googleSessionChecked = false;
+    let projectFilter = 'all';
+    let newsCategoryFilter = 'all';
+
+    function getRoleLabel(code) {
+      return { admin: 'Super Admin', chairperson: 'Chủ nhiệm', department_head: 'Trưởng/phó ban', delegated_member: 'Thành viên ủy quyền' }[code] || 'Thành viên ủy quyền';
+    }
+    function getAuthorizedUser() {
+      return authSession.googleEmail ? authSession : null;
+    }
+
+    async function refreshPublicCMSData() {
+      try {
+        const response = await fetch('/api/cms/public', { cache: 'no-store' });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || 'Không thể tải dữ liệu website từ cơ sở dữ liệu.');
+        if (payload.state) {
+          cmsDB = { ...cmsDB, ...payload.state };
+          saveCMSData(cmsDB);
+          renderPublicSite();
+        }
+      } catch (error) {
+        console.error('Public CMS data load failed:', error);
+        showToast(error.message || 'Không thể tải dữ liệu website từ SQLite.', 'warning');
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const box = document.getElementById('toast-container');
+      const styles = { success: 'bg-slate-900 border-emerald-500/60 text-white', warning: 'bg-amber-950 border-amber-500/70 text-amber-50', info: 'bg-blue-950 border-sky-500/70 text-sky-50' };
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto p-3.5 rounded-xl border shadow-xl text-xs leading-relaxed flex items-start gap-2.5 animate-pop ${styles[type] || styles.success}`;
+      toast.innerHTML = `<div>${message}</div>`;
+      box.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    function handleGoogleLibraryLoad() {
+      googleLibraryReady = true;
+      initializeGoogleSignIn();
+    }
+    window.addEventListener('google-gsi-ready', handleGoogleLibraryLoad);
+
+    async function initializeGoogleSignIn() {
+      if (googleSignInInitialized || !googleLibraryReady || !googleSessionChecked || authSession.googleEmail) return;
+      try {
+        const configResponse = await fetch('/api/auth/config', { cache: 'no-store' });
+        const config = await configResponse.json();
+        if (!configResponse.ok) throw new Error(config.error || 'Không thể tải cấu hình Google.');
+        googleClientId = config.clientId;
+        if (!googleClientId) {
+          console.error('Google automatic sign-in is unavailable: GOOGLE_CLIENT_ID is not configured.');
+          return;
+        }
+        if (!window.google?.accounts?.id) return;
+        window.google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: handleGoogleCredential,
+          auto_select: true,
+          cancel_on_tap_outside: false,
+          use_fedcm_for_prompt: true
+        });
+        googleSignInInitialized = true;
+        window.google.accounts.id.prompt(notification => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            console.info('Google could not automatically verify an account. Dashboard remains locked.');
+          }
+        });
+      } catch (error) {
+        console.error('Google automatic sign-in initialization failed:', error);
+      }
+    }
+
+    async function handleGoogleCredential(response) {
+      try {
+        const result = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ credential: response.credential })
+        });
+        const payload = await result.json();
+        if (!result.ok) {
+          if (result.status === 403) {
+            authSession = { googleEmail: '', googleName: '', role: '', dashboardUnlocked: false };
+            renderPublicSite();
+            console.info('Google account is not authorized for the Dashboard.');
+            return;
+          }
+          showToast(payload.error || 'Tài khoản Google không được cấp quyền Dashboard.', 'warning');
+          return;
+        }
+        authSession = {
+          googleEmail: payload.user.email,
+          googleName: payload.user.name,
+          role: payload.user.role,
+          dashboardUnlocked: false
+        };
+        renderPublicSite();
+        if (window.location.hash === '#dashboard') showDashboardView();
+      } catch (error) {
+        console.error('Google credential verification failed:', error);
+        showToast('Không thể xác thực phiên Google với máy chủ.', 'warning');
+      }
+    }
+
+    async function restoreGoogleSession() {
+      try {
+        const response = await fetch('/api/auth/session', { cache: 'no-store' });
+        const payload = await response.json();
+        authSession = payload.authenticated
+          ? {
+            googleEmail: payload.user.email,
+            googleName: payload.user.name,
+            role: payload.user.role,
+            dashboardUnlocked: payload.dashboardUnlocked === true
+          }
+          : { googleEmail: '', googleName: '', role: '', dashboardUnlocked: false };
+        if (authSession.dashboardUnlocked) {
+          const lockResponse = await fetch('/api/auth/dashboard-lock', { method: 'POST' });
+          if (!lockResponse.ok) throw new Error('Không thể khóa lại Dashboard trước khi yêu cầu mật khẩu.');
+          authSession.dashboardUnlocked = false;
+        }
+      } catch (error) {
+        authSession = { googleEmail: '', googleName: '', role: '', dashboardUnlocked: false };
+        showToast('Không thể kiểm tra phiên đăng nhập Google với máy chủ.', 'warning');
+      }
+      googleSessionChecked = true;
+      renderPublicSite();
+      initializeGoogleSignIn();
+    }
+
+    function navigateToDashboardFlow(e) {
+      if (e) e.preventDefault();
+      if (!getAuthorizedUser()) {
+        showToast('Đang chờ Google xác minh tài khoản được cấp quyền.', 'info');
+        return;
+      }
+      openDashboardPasswordDialog();
+    }
+
+    function openDashboardPasswordDialog() {
+      const dialog = document.getElementById('dashboard-password-dialog');
+      document.getElementById('dashboard-password-account').textContent = authSession.googleEmail;
+      document.getElementById('dashboard-password-input').value = '';
+      document.getElementById('dashboard-password-error').classList.add('hidden');
+      dialog.classList.remove('hidden');
+      dialog.classList.add('flex');
+      document.getElementById('dashboard-password-input').focus();
+    }
+
+    function closeDashboardPasswordDialog() {
+      const dialog = document.getElementById('dashboard-password-dialog');
+      dialog.classList.add('hidden');
+      dialog.classList.remove('flex');
+    }
+
+    async function submitDashboardPassword(event) {
+      event.preventDefault();
+      const password = document.getElementById('dashboard-password-input').value;
+      const errorElement = document.getElementById('dashboard-password-error');
+      try {
+        const response = await fetch('/api/auth/dashboard-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          errorElement.textContent = result.error || 'Không thể xác minh mật khẩu.';
+          errorElement.classList.remove('hidden');
+          return;
+        }
+        authSession.dashboardUnlocked = true;
+        closeDashboardPasswordDialog();
+        showDashboardView();
+      } catch (error) {
+        errorElement.textContent = error.message || 'Không thể kết nối máy chủ.';
+        errorElement.classList.remove('hidden');
+      }
+    }
+
+    function showDashboardView() {
+      if (!getAuthorizedUser() || !authSession.dashboardUnlocked) return;
+      const portal = document.getElementById('dashboard-portal-view');
+      const frame = document.getElementById('dashboard-frame');
+      document.getElementById('public-portal-view').classList.add('hidden');
+      document.getElementById('toast-container').classList.add('hidden');
+      portal.classList.remove('hidden');
+      document.body.classList.remove('bg-[#040711]', 'text-slate-200');
+      document.body.classList.add('overflow-hidden');
+      if (!frame.src || !frame.src.endsWith('/dashboard.html')) {
+        frame.src = '/dashboard.html';
+      }
+      if (window.location.hash !== '#dashboard') {
+        history.replaceState(null, '', `${window.location.pathname}${window.location.search}#dashboard`);
+      }
+    }
+
+    function handleDashboardFrameLoad() {
+      try {
+        const frameUrl = document.getElementById('dashboard-frame').contentWindow.location;
+        if (frameUrl.pathname === '/trangchu.html' && frameUrl.searchParams.has('login')) {
+          exitDashboardView(true);
+        } else if (frameUrl.pathname === '/trangchu.html' && frameUrl.searchParams.has('password')) {
+          exitDashboardView();
+        }
+      } catch (error) {
+        showToast('Không thể xác minh nội dung Dashboard được nhúng.', 'warning');
+        exitDashboardView();
+      }
+    }
+
+    async function exitDashboardView(signedOut = false) {
+      if (!signedOut && authSession.googleEmail) {
+        try {
+          const response = await fetch('/api/auth/dashboard-lock', { method: 'POST' });
+          if (response.status === 401) {
+            signedOut = true;
+          } else if (!response.ok) {
+            throw new Error('Không thể khóa phiên Dashboard.');
+          } else {
+            authSession.dashboardUnlocked = false;
+          }
+        } catch (error) {
+          showToast(error.message || 'Không thể khóa phiên Dashboard.', 'warning');
+          return;
+        }
+      }
+      document.getElementById('dashboard-portal-view').classList.add('hidden');
+      document.getElementById('public-portal-view').classList.remove('hidden');
+      document.getElementById('toast-container').classList.remove('hidden');
+      document.getElementById('dashboard-frame').src = 'about:blank';
+      document.body.classList.remove('overflow-hidden');
+      if (signedOut) {
+        authSession = { googleEmail: '', googleName: '', role: '', dashboardUnlocked: false };
+        googleSignInInitialized = true;
+        window.google?.accounts?.id?.disableAutoSelect();
+      }
+      if (window.location.hash === '#dashboard') {
+        history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      }
+      if (getAuthorizedUser() && new URLSearchParams(window.location.search).has('password')) {
+        openDashboardPasswordDialog();
+      } else if (new URLSearchParams(window.location.search).has('login')) {
+        showToast('Phiên Google hết hạn hoặc chưa được cấp quyền Dashboard.', 'warning');
+      }
+      renderPublicSite();
+      refreshPublicCMSData();
+    }
+
+    function renderPublicSite() {
+      const authUser = getAuthorizedUser();
+      const desktopSlot = document.getElementById('nav-dashboard-slot');
+      const mobileSlot = document.getElementById('mobile-dashboard-slot');
+
+      if (desktopSlot) {
+        desktopSlot.innerHTML = authUser ? `
+          <a href="dashboard.html" onclick="navigateToDashboardFlow(event)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/40 text-sky-300 text-xs font-bold transition-all cursor-pointer">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+            <span>Dashboard</span>
+          </a>` : '';
+      }
+      if (mobileSlot) {
+        mobileSlot.innerHTML = authUser ? `
+          <a href="dashboard.html" onclick="navigateToDashboardFlow(event)" class="w-full mt-1 flex items-center gap-2 px-3 py-2.5 rounded-xl bg-sky-500/15 border border-sky-400/40 text-sky-300 font-bold cursor-pointer">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>Mở Dashboard Quản trị</span>
+          </a>` : '';
+      }
+      const s = cmsDB.siteSettings;
+      const publishedPosts = cmsDB.posts.filter(p => p.status === 'published');
+      document.getElementById('hero-title').textContent = s.clubTitle;
+      document.getElementById('hero-intro').textContent = s.shortIntro;
+      document.getElementById('about-vision').textContent = s.vision;
+      document.getElementById('about-mission').textContent = s.mission;
+
+      document.getElementById('hero-metrics').innerHTML = `
+        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3"><div class="text-2xl font-extrabold text-white font-mono">${String(cmsDB.baselineCounts.posts + publishedPosts.length).padStart(2, '0')}</div><div class="text-[11px] text-slate-400">Ấn phẩm Space News</div></div>
+        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3"><div class="text-2xl font-extrabold text-sky-400 font-mono">${String(cmsDB.baselineCounts.projects + cmsDB.projects.length).padStart(2, '0')}</div><div class="text-[11px] text-slate-400">Dự án Space Lab</div></div>
+        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3"><div class="text-2xl font-extrabold text-blue-400 font-mono">${String(cmsDB.baselineCounts.activities + cmsDB.activities.filter(a => a.status === 'published').length).padStart(2, '0')}</div><div class="text-[11px] text-slate-400">Sự kiện & Đào tạo</div></div>
+        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3"><div class="text-2xl font-extrabold text-emerald-400 font-mono">${String(cmsDB.baselineCounts.members + cmsDB.members.length).padStart(2, '0')}</div><div class="text-[11px] text-slate-400">Thành viên CLB</div></div>
+      `;
+
+      document.getElementById('public-projects-grid').innerHTML = cmsDB.projects.map(prj => `
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-mono text-sky-400 mb-2"><span>${escapeHTML(prj.id)}</span><span>${prj.progress}%</span></div>
+            <h3 class="text-base font-bold text-white">${escapeHTML(prj.name)}</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">${escapeHTML(prj.summary)}</p>
+          </div>
+          <div class="space-y-2">
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue-500" style="width: ${prj.progress}%"></div></div>
+            <div class="text-xs text-slate-400">Lead: <strong class="text-slate-200">${escapeHTML(prj.lead)}</strong></div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('public-news-grid').innerHTML = publishedPosts.map(post => `
+        <article class="bg-[#0B1224] border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex justify-between text-[11px] font-mono text-sky-400 mb-2"><span>${escapeHTML(post.category)}</span><span>${escapeHTML(post.publishedAt)}</span></div>
+            <h3 class="text-base font-bold text-white leading-snug">${escapeHTML(post.title)}</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">${escapeHTML(post.excerpt)}</p>
+          </div>
+          <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400">Tác giả: <strong class="text-slate-200">${escapeHTML(post.author)}</strong></div>
+        </article>
+      `).join('');
+
+      document.getElementById('public-activities-list').innerHTML = cmsDB.activities.filter(a => a.status === 'published').map(act => `
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-5 space-y-1.5">
+          <div class="text-xs font-mono text-sky-400">${escapeHTML(act.date)}</div>
+          <h3 class="text-base font-bold text-white">${escapeHTML(act.title)}</h3>
+          <div class="text-xs text-slate-400">📍 ${escapeHTML(act.location)}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('public-team-grid').innerHTML = cmsDB.members.filter(m => m.isExecutive).map(m => `
+        <div class="bg-[#0B1224] border border-slate-800 rounded-2xl p-5 text-center">
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-600 text-white font-bold flex items-center justify-center">${escapeHTML(m.initials || 'BK')}</div>
+          <h3 class="text-sm font-bold text-white mt-3">${escapeHTML(m.fullName)}</h3>
+          <div class="text-xs text-sky-400 mt-1">${escapeHTML(m.position)}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('public-sponsors-grid').innerHTML = cmsDB.sponsors.filter(sp => sp.active).map(sp => `
+        <div class="bg-[#0B1224] border border-slate-800 rounded-xl p-4 text-center">
+          <div class="text-sm font-bold text-white">${escapeHTML(sp.name)}</div>
+          <div class="text-[11px] text-sky-400 mt-1">${escapeHTML(sp.tier)}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('footer-contact-info').innerHTML = `
+        <div>📧 Email: <span class="font-mono text-sky-300">${escapeHTML(s.email)}</span></div>
+        <div>📍 Địa chỉ: <span class="text-slate-300">${escapeHTML(s.address)}</span></div>
+      `;
+      lucide.createIcons();
+    }
+
+    function openJoinClubModal() { showToast('Cổng đăng ký thành viên đang mở!', 'info'); }
+    function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+    window.addEventListener('storage', () => {
+      refreshPublicCMSData();
+      if (window.location.hash === '#dashboard' && authSession.dashboardUnlocked) showDashboardView();
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.google?.accounts?.id) handleGoogleLibraryLoad();
+      document.getElementById('dashboard-frame').addEventListener('load', handleDashboardFrameLoad);
+      refreshPublicCMSData();
+      restoreGoogleSession();
+      if (new URLSearchParams(window.location.search).has('login')) {
+        showToast('Vui lòng đăng nhập Google bằng tài khoản nằm trong whitelist để mở Dashboard.', 'info');
+      }
+      window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#dashboard') showDashboardView();
+        else exitDashboardView();
+      });
+      if (window.location.hash === '#dashboard' && authSession.googleEmail) showDashboardView();
+    });
+  </script>
+</body>
+</html>

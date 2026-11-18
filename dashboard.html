@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BK SpaceTech — Admin Dashboard CMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Be Vietnam Pro', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
+    .space-grid-bg {
+      background-image: radial-gradient(rgba(56, 189, 248, 0.14) 0.7px, transparent 0.7px);
+      background-size: 24px 24px;
+    }
+    #cms-sidebar { overflow: hidden; }
+    #cms-sidebar > .cms-sidebar-main { min-height: 0; flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; }
+    #cms-sidebar > .cms-sidebar-footer { flex: 0 0 auto; }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <div id="cms-mobile-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+    <aside id="cms-sidebar" class="fixed lg:sticky top-0 left-0 z-50 h-screen w-72 bg-[#0B1120] space-grid-bg text-slate-300 border-r border-slate-800/80 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-200 shrink-0">
+      <div class="cms-sidebar-main">
+        <div class="h-16 px-5 flex items-center justify-between border-b border-slate-800/90 bg-[#0B1120]/90">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-600/25">
+              <i data-lucide="rocket" class="w-5 h-5 text-white"></i>
+            </div>
+            <div>
+              <div class="text-white font-extrabold tracking-wide text-sm">BK SPACETECH</div>
+              <div class="text-[10px] font-mono font-semibold tracking-widest text-sky-400 uppercase mt-0.5">ADMIN CMS • v2.6</div>
+            </div>
+          </div>
+        </div>
+        <div class="px-3.5 py-5">
+          <div class="px-3 mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Menu Quản trị hệ thống</div>
+          <nav id="sidebar-nav" class="space-y-1"></nav>
+        </div>
+      </div>
+      <div class="cms-sidebar-footer p-4 border-t border-slate-800/90 bg-[#080D19]">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3 space-y-2.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-medium text-slate-300 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Website Public</span>
+            <span class="font-mono text-[11px] text-sky-400">Live Sync</span>
+          </div>
+          <button onclick="returnToPublicPortal()" class="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white text-xs font-semibold transition-colors cursor-pointer">
+            <i data-lucide="globe" class="w-3.5 h-3.5"></i><span>Xem Trang chủ</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="sticky top-0 z-30 min-h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-6 py-2 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <button onclick="toggleSidebar(true)" class="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 shrink-0 cursor-pointer" aria-label="Mở menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div class="min-w-0">
+          <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-400"><span>BK SpaceTech CMS</span><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i><span id="header-breadcrumb" class="text-slate-600 font-medium">Tổng quan hệ thống</span></div>
+          <h1 id="header-title" class="text-base sm:text-lg font-bold text-slate-900 truncate">Tổng quan hệ thống</h1>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div class="hidden md:block text-right leading-tight">
+            <div id="current-user-name" class="text-xs font-bold text-slate-900"></div>
+            <div id="current-user-email" class="text-[11px] font-mono text-slate-500"></div>
+          </div>
+          <button onclick="logout()" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl border border-slate-200 hover:border-rose-200 hover:bg-rose-50 text-slate-600 hover:text-rose-700 text-xs font-semibold cursor-pointer">
+            <i data-lucide="log-out" class="w-4 h-4"></i><span class="hidden sm:inline">Đăng xuất</span>
+          </button>
+        </div>
+      </header>
+      <div id="rbac-banner" class="bg-blue-50/80 border-b border-blue-100 px-4 sm:px-6 py-3 text-xs text-blue-900"></div>
+      <main id="workspace" class="p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6"></main>
+    </div>
+  </div>
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+  <script>
+    const DB_STORAGE_KEY = 'BKSPACETECH_CMS_DB_V1';
+
+    let session = { googleEmail: '', googleName: '', role: '' };
+    let cmsStateVersion = 0;
+    let cmsSaveQueue = Promise.resolve();
+    let cmsSaveBlocked = false;
+    let cmsSaveError = null;
+
+    let db = JSON.parse(localStorage.getItem(DB_STORAGE_KEY) || 'null');
+
+    const ROLES = {
+      admin: { label: 'Super Admin', desc: 'Toàn quyền quản trị hệ thống, đăng nội dung, phân quyền và cấu hình.' },
+      chairperson: { label: 'Chủ nhiệm', desc: 'Quản lý và đăng nội dung, hoạt động; không quản lý tài khoản Admin.' },
+      department_head: { label: 'Trưởng/phó ban', desc: 'Được đăng nội dung, cập nhật dự án. Không được xóa dữ liệu, sửa nhân sự hoặc cài đặt trang chủ.' },
+      delegated_member: { label: 'Thành viên ủy quyền', desc: 'Được thêm và chỉnh sửa nội dung; nội dung mới hiển thị ngay trên trang chủ.' }
+    };
+    const PERMISSIONS = [
+      { id: 'content.create', label: 'Tạo nội dung' },
+      { id: 'content.edit', label: 'Chỉnh sửa nội dung' },
+      { id: 'content.approve', label: 'Đăng trực tiếp' },
+      { id: 'content.delete', label: 'Xóa nội dung' },
+      { id: 'members.manage', label: 'Quản lý thành viên' },
+      { id: 'users.manage', label: 'Quản lý tài khoản và phân quyền' },
+      { id: 'settings.manage', label: 'Cấu hình hệ thống' }
+    ];
+    const ROLE_PERMISSIONS = {
+      admin: PERMISSIONS.map(permission => permission.id),
+      chairperson: ['content.create', 'content.edit', 'content.approve', 'members.manage'],
+      department_head: ['content.create', 'content.edit', 'content.approve'],
+      delegated_member: ['content.create', 'content.edit', 'content.approve']
+    };
+
+    const uiState = { tab: 'overview', role: 'delegated_member' };
+    let auditEntries = [];
+    function ensureCMSCollections() {
+      if (!db) return;
+      db.departments ||= [
+        { id: 'DEP-01', name: 'Ban Chủ nhiệm', description: 'Điều phối và quản lý hoạt động câu lạc bộ.' },
+        { id: 'DEP-02', name: 'Ban Space Lab', description: 'Nghiên cứu, thiết kế và chế tạo sản phẩm hàng không vũ trụ.' },
+        { id: 'DEP-03', name: 'Ban Chuyên môn', description: 'Tổ chức chương trình đào tạo và phát triển chuyên môn.' },
+        { id: 'DEP-04', name: 'Ban Truyền thông', description: 'Quản lý nội dung, tin tức và truyền thông câu lạc bộ.' },
+        { id: 'DEP-05', name: 'Ban Đối ngoại', description: 'Kết nối đối tác và nhà tài trợ.' }
+      ];
+      db.sponsors ||= [];
+      db.auditLogs ||= [];
+      db.authorizedEmails ||= [];
+      db.users = db.authorizedEmails.map(user => ({ ...user, roleId: user.role }));
+      db.roles = Object.entries(ROLES).map(([id, role]) => ({
+        id,
+        name: role.label,
+        description: role.desc,
+        isSystem: true
+      }));
+      db.permissions = PERMISSIONS.map(permission => ({ ...permission, isSystem: true }));
+      db.rolePermissions = Object.entries(ROLE_PERMISSIONS).flatMap(([roleId, permissionIds]) =>
+        permissionIds.map(permissionId => ({ roleId, permissionId }))
+      );
+      db.categories ||= [];
+      for (const post of db.posts || []) {
+        const name = String(post.category || '').trim();
+        if (!name) continue;
+        const key = name.toLowerCase();
+        let category = db.categories.find(item => item.name.trim().toLowerCase() === key);
+        if (!category) {
+          let nextId = db.categories.length + 1;
+          while (db.categories.some(item => item.id === `CAT-${String(nextId).padStart(2, '0')}`)) nextId++;
+          category = { id: `CAT-${String(nextId).padStart(2, '0')}`, name, description: '' };
+          db.categories.push(category);
+        }
+        post.categoryId ||= category.id;
+      }
+      db.revisions ||= [];
+      const revisionIds = new Set(db.revisions.map(revision => revision.id));
+      for (const post of db.posts || []) {
+        for (const [index, revision] of (post.revisions || []).entries()) {
+          const revisionId = revision.id || `REV-${post.id}-${index + 1}`;
+          if (revisionIds.has(revisionId)) continue;
+          db.revisions.push({
+            id: revisionId,
+            contentType: 'post',
+            contentId: post.id,
+            editor: revision.editor || post.author || '',
+            action: revision.action || 'Bản chỉnh sửa cũ',
+            snapshot: typeof revision.snapshot === 'string'
+              ? revision.snapshot
+              : JSON.stringify(revision.snapshot || {}),
+            time: revision.time || post.updatedAt || ''
+          });
+          revisionIds.add(revisionId);
+        }
+      }
+      db.contentApprovals ||= [];
+      for (const post of db.posts || []) {
+        if (post.status === 'pending_review') {
+          post.status = 'published';
+          post.publishedAt ||= new Date().toLocaleDateString('vi-VN');
+        }
+      }
+      db.schemaVersion = 2;
+      localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
+    }
+    ensureCMSCollections();
+
+    function hasPermission(permissionId) {
+      return db.rolePermissions.some(link =>
+        link.roleId === uiState.role && link.permissionId === permissionId
+      );
+    }
+
+    function save() {
+      localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
+      render();
+      const stateSnapshot = JSON.parse(JSON.stringify(db));
+      cmsSaveQueue = cmsSaveQueue.then(async () => {
+        if (cmsSaveBlocked) throw new Error('Dữ liệu chưa đồng bộ vì có thay đổi mới hơn trên máy chủ. Tải lại Dashboard để tiếp tục.');
+        const response = await fetch('/api/cms/state', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state: stateSnapshot, expectedVersion: cmsStateVersion })
+        });
+        const payload = await response.json();
+        if (response.status === 409) {
+          cmsSaveBlocked = true;
+          throw new Error(payload.error || 'Dữ liệu đã thay đổi ở phiên khác. Hãy tải lại Dashboard.');
+        }
+        if (!response.ok) throw new Error(payload.error || 'Không thể lưu dữ liệu vào SQLite.');
+        cmsStateVersion = payload.version;
+        cmsSaveError = null;
+        if (window.parent !== window && typeof window.parent.refreshPublicCMSData === 'function') {
+          window.parent.refreshPublicCMSData();
+        }
+        return true;
+      }).catch(error => {
+        cmsSaveError = error;
+        toast(error.message || 'Không thể lưu dữ liệu vào SQLite.');
+        return false;
+      });
+      return cmsSaveQueue;
+    }
+    async function waitForCMSSaves() {
+      let queue;
+      do {
+        queue = cmsSaveQueue;
+        const saved = await queue;
+        if (saved === false || cmsSaveError) return false;
+      } while (queue !== cmsSaveQueue);
+      return true;
+    }
+    function toggleSidebar(open) {
+      document.getElementById('cms-sidebar').classList.toggle('-translate-x-full', !open);
+      document.getElementById('cms-mobile-backdrop').classList.toggle('hidden', !open);
+    }
+    function switchTab(tab) {
+      uiState.tab = tab;
+      toggleSidebar(false);
+      render();
+      if (uiState.tab === 'audit' && uiState.role === 'admin') loadAuditLog();
+    }
+    function toast(msg) {
+      const el = document.createElement('div');
+      el.className = 'bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-medium';
+      el.textContent = msg;
+      document.getElementById('toast-box').appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+    async function logout() {
+      try {
+        if (!await waitForCMSSaves()) {
+          toast('Chưa thể đăng xuất vì dữ liệu chưa lưu vào máy chủ. Hãy thử lưu lại trước.');
+          return;
+        }
+        const response = await fetch('/api/auth/logout', { method: 'POST' });
+        if (!response.ok) throw new Error('Không thể kết thúc phiên đăng nhập.');
+        returnToPublicPortal(true);
+      } catch (error) {
+        toast(error.message || 'Đăng xuất thất bại.');
+      }
+    }
+    async function returnToPublicPortal(signedOut = false) {
+      if (!await waitForCMSSaves()) {
+        toast('Dữ liệu chưa đồng bộ với trang chủ. Không thể rời Dashboard cho đến khi máy chủ lưu thành công.');
+        return;
+      }
+      if (window.parent !== window && typeof window.parent.exitDashboardView === 'function') {
+        window.parent.exitDashboardView(signedOut);
+      } else {
+        fetch('/api/auth/dashboard-lock', { method: 'POST' }).finally(() => window.location.href = 'trangchu.html');
+      }
+    }
+    function recordRevision(post, action, time) {
+      const revision = {
+        id: `REV-${Date.now()}-${post.id}`,
+        contentType: 'post',
+        contentId: post.id,
+        editor: session.googleEmail,
+        action,
+        snapshot: JSON.stringify({
+          title: post.title,
+          category: post.category,
+          excerpt: post.excerpt,
+          content: post.content,
+          status: post.status,
+          reviewNote: post.reviewNote
+        }),
+        time
+      };
+      db.revisions.unshift(revision);
+      post.revisions ||= [];
+      post.revisions.push(revision);
+    }
+    function recordLocalAudit(action, target) {
+      db.auditLogs.unshift({
+        id: `LOCAL-${Date.now()}`,
+        actor: session.googleEmail,
+        action,
+        targetEmail: target,
+        time: new Date().toISOString()
+      });
+    }
+    function deletePost(id) {
+      if (!hasPermission('content.delete')) { toast('Bạn không có quyền xóa bài viết.'); return; }
+      db.posts = db.posts.filter(x => x.id !== id);
+      toast('Đã xóa bài viết.'); save();
+    }
+    function updateProgress(id, val) {
+      const prj = db.projects.find(x => x.id === id);
+      if (prj) { prj.progress = Number(val); toast('Đã đồng bộ tiến độ sang trangchu.html!'); save(); }
+    }
+    function toggleWhitelist(id) {
+      if (!hasPermission('users.manage')) { toast('Chỉ Admin mới được chỉnh sửa Whitelist.'); return; }
+      const item = db.authorizedEmails.find(x => x.id === id);
+      if (!item) return;
+      fetch(`/api/auth/whitelist/${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: !item.isActive })
+      }).then(async response => {
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Không thể cập nhật whitelist.');
+        item.isActive = result.item.isActive;
+        db.users = db.authorizedEmails.map(user => ({ ...user, roleId: user.role }));
+        toast('Đã cập nhật trạng thái Whitelist!');
+        save();
+        if (!item.isActive && item.email.toLowerCase() === session.googleEmail.toLowerCase()) logout();
+      }).catch(error => toast(error.message || 'Không thể cập nhật whitelist.'));
+    }
+    async function addWhitelistAccount(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const account = {
+        email: document.getElementById('new-account-email').value,
+        name: document.getElementById('new-account-name').value,
+        role: document.getElementById('new-account-role').value
+      };
+      try {
+        const response = await fetch('/api/auth/whitelist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(account)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Không thể cấp quyền tài khoản.');
+        db.authorizedEmails.push(result.item);
+        db.users = db.authorizedEmails.map(user => ({ ...user, roleId: user.role }));
+        form.reset();
+        toast(`Đã cấp quyền ${result.item.email} (${ROLES[result.item.role].label}).`);
+        await save();
+      } catch (error) {
+        toast(error.message || 'Không thể cấp quyền tài khoản.');
+      }
+    }
+    function deleteCategory(id) {
+      if (!hasPermission('content.delete')) { toast('Bạn không có quyền xóa danh mục.'); return; }
+      const category = db.categories.find(item => item.id === id);
+      if (!category) return;
+      if (db.posts.some(post => post.categoryId === id)) {
+        toast('Không thể xóa danh mục đang được bài viết sử dụng.');
+        return;
+      }
+      db.categories = db.categories.filter(item => item.id !== id);
+      recordLocalAudit('Xóa danh mục', category.name);
+      save();
+      toast('Đã xóa danh mục.');
+    }
+    function saveSettings(e) {
+      e.preventDefault();
+      if (!hasPermission('settings.manage')) { toast('Chỉ Admin mới được lưu cấu hình trang chủ.'); return; }
+      db.siteSettings.clubTitle = document.getElementById('cfg-title').value;
+      db.siteSettings.shortIntro = document.getElementById('cfg-intro').value;
+      toast('Đã lưu và đồng bộ lên trangchu.html!'); save();
+    }
+
+    function nextRecordId(prefix, collection) {
+      const next = collection.reduce((highest, item) => {
+        const number = Number(String(item.id).match(/(\d+)$/)?.[1] || 0);
+        return Math.max(highest, number);
+      }, 0) + 1;
+      return `${prefix}-${String(next).padStart(3, '0')}`;
+    }
+
+    function openAddPanel() {
+      const panel = document.getElementById('section-add-panel');
+      if (!panel) return;
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) panel.querySelector('input:not([type="hidden"]), select, textarea')?.focus();
+    }
+
+    function openSettingsAdd() {
+      const accountInput = document.getElementById('new-account-name');
+      if (!accountInput) {
+        toast('Vai trò hiện tại không được cấp quyền thêm tài khoản.');
+        return;
+      }
+      accountInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      accountInput.focus();
+    }
+
+    function addPanelMarkup() {
+      const inputClass = 'mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500';
+      const label = (title, control) => `<label class="text-xs font-semibold text-slate-700">${title}${control}</label>`;
+      const input = (id, title, placeholder = '', type = 'text', required = true, attrs = '') =>
+        label(title, `<input id="${id}" name="${id}" type="${type}" ${required ? 'required' : ''} ${attrs} placeholder="${escapeHTML(placeholder)}" class="${inputClass}" />`);
+      const textarea = (id, title, placeholder = '', required = false, rows = 3) =>
+        label(title, `<textarea id="${id}" name="${id}" ${required ? 'required' : ''} rows="${rows}" placeholder="${escapeHTML(placeholder)}" class="${inputClass}"></textarea>`);
+      const departmentSelect = label('Ban phụ trách', `<select name="department" class="${inputClass}"><option value="">Chưa phân ban</option>${db.departments.map(item => `<option value="${escapeHTML(item.name)}">${escapeHTML(item.name)}</option>`).join('')}</select>`);
+      const categorySelect = label('Danh mục', `<select name="categoryId" required class="${inputClass}">${db.categories.map(item => `<option value="${escapeHTML(item.id)}">${escapeHTML(item.name)}</option>`).join('')}</select>`);
+      const contentForm = (kind, title, submitLabel, extraFields = '') => `
+        <form onsubmit="submitSectionAdd(event, '${kind}')" class="bg-white border border-blue-100 rounded-2xl p-5 space-y-4">
+          <div><h2 class="font-bold text-slate-900">${title}</h2><p class="text-xs text-slate-500 mt-1">${kind === 'post' ? 'Bài viết được đăng ngay lên trang chủ sau khi lưu.' : 'Dữ liệu được lưu vào SQLite và hiển thị công khai sau khi lưu.'}</p></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            ${input('add-content-title', 'Tiêu đề', 'Nhập tiêu đề')}
+            ${categorySelect}
+            ${input('add-content-excerpt', 'Tóm tắt', 'Mô tả ngắn', 'text', false)}
+            ${departmentSelect}
+            ${textarea('add-content-body', 'Nội dung', 'Nhập nội dung chi tiết', false)}
+            ${extraFields}
+          </div>
+          <div class="flex flex-wrap gap-2"><button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">${submitLabel}</button><button type="button" onclick="openAddPanel()" class="px-4 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600">Đóng</button></div>
+        </form>`;
+
+      switch (uiState.tab) {
+        case 'overview':
+          return `<section class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900">Thêm nhanh</h2><p class="text-xs text-slate-500 mt-1">Chọn phân hệ để mở biểu mẫu thêm dữ liệu.</p><div class="flex flex-wrap gap-2 mt-4">${[
+            ['posts', 'Bài viết'], ['projects', 'Dự án'], ['activities', 'Hoạt động'], ['members', 'Thành viên']
+          ].map(([tab, title]) => `<button type="button" onclick="switchTab('${tab}'); setTimeout(openAddPanel, 0)" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700 text-xs font-semibold hover:bg-blue-100">Thêm ${title}</button>`).join('')}</div></section>`;
+        case 'posts':
+          return contentForm('post', 'Thêm bài viết', 'Lưu bài viết');
+        case 'categories':
+          return `<form onsubmit="submitSectionAdd(event, 'category')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-4">Thêm danh mục</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-category-name', 'Tên danh mục', 'Ví dụ: Space News', 'text', true, 'maxlength="80"')}${input('add-category-description', 'Mô tả', 'Mô tả ngắn', 'text', false, 'maxlength="240"')}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm danh mục</button></form>`;
+        case 'projects':
+          return `<form onsubmit="submitSectionAdd(event, 'project')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-4">Thêm dự án</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-project-name', 'Tên dự án', 'Tên dự án nghiên cứu')}${departmentSelect}${input('add-project-lead', 'Trưởng dự án', 'Họ tên trưởng dự án')}${label('Trạng thái', `<select name="add-project-status" class="${inputClass}"><option value="planned">Dự kiến</option><option value="in_progress">Đang thực hiện</option><option value="testing">Đang thử nghiệm</option><option value="completed">Hoàn thành</option></select>`)}${input('add-project-progress', 'Tiến độ (%)', '0', 'number', true, 'min="0" max="100" value="0"')}${textarea('add-project-summary', 'Mô tả dự án', 'Mục tiêu và nội dung', true)}${textarea('add-project-result', 'Kết quả', 'Kết quả hiện tại', false)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm dự án</button></form>`;
+        case 'activities':
+        case 'training':
+          return `<form onsubmit="submitSectionAdd(event, 'activity')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-2">Thêm ${uiState.tab === 'training' ? 'chương trình đào tạo' : 'hoạt động'}</h2><p class="text-xs text-slate-500 mb-4">Sau khi lưu, nội dung sẽ xuất hiện ngay trên trang chủ.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-activity-title', 'Tên hoạt động', 'Tên chương trình')}${departmentSelect}${input('add-activity-date', 'Thời gian', 'YYYY-MM-DD HH:mm', 'datetime-local')}${input('add-activity-location', 'Địa điểm', 'Địa điểm tổ chức')}${input('add-activity-capacity', 'Sức chứa', '0', 'number', false, 'min="0"')}${textarea('add-activity-description', 'Mô tả', 'Nội dung hoạt động', false)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm ${uiState.tab === 'training' ? 'đào tạo' : 'hoạt động'}</button></form>`;
+        case 'members':
+          return `<form onsubmit="submitSectionAdd(event, 'member')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-2">Thêm thành viên</h2><p class="text-xs text-slate-500 mb-4">Thành viên mới sẽ hiển thị ở phần nhân sự trên trang chủ.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-member-name', 'Họ tên', 'Nguyễn Văn A')}${input('add-member-email', 'Email', 'name@example.com', 'email', false)}${input('add-member-student-id', 'Mã sinh viên', '20240000', 'text', false)}${input('add-member-position', 'Chức vụ', 'Thành viên', 'text', false)}${departmentSelect}${input('add-member-generation', 'Thế hệ', 'Gen 6', 'text', false)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm thành viên</button></form>`;
+        case 'departments':
+          return `<form onsubmit="submitSectionAdd(event, 'department')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-4">Thêm ban</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-department-name', 'Tên ban', 'Ban chuyên môn')}${textarea('add-department-description', 'Mô tả', 'Nhiệm vụ của ban', false, 2)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm ban</button></form>`;
+        case 'media':
+          return `<form onsubmit="submitSectionAdd(event, 'media')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-1">Thêm tài nguyên media</h2><p class="text-xs text-slate-500 mb-4">Nhập URL công khai của ảnh, video hoặc tài liệu (chưa tải tệp lên máy chủ).</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-media-name', 'Tên tệp', 'image.jpg')}${input('add-media-url', 'URL tài nguyên', 'https://example.com/image.jpg', 'url')}${label('Loại', `<select name="mediaType" class="${inputClass}"><option value="image">Ảnh</option><option value="video">Video</option><option value="document">Tài liệu</option><option value="other">Khác</option></select>`)}${input('add-media-folder', 'Thư mục', 'general', 'text', false)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm media</button></form>`;
+        case 'sponsors':
+          return `<form onsubmit="submitSectionAdd(event, 'sponsor')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-4">Thêm nhà tài trợ</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-sponsor-name', 'Tên tổ chức', 'Tên nhà tài trợ')}${input('add-sponsor-tier', 'Hạng tài trợ', 'Đối tác chuyên môn', 'text', false)}${input('add-sponsor-website', 'Website', 'https://example.com', 'url', false)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm nhà tài trợ</button></form>`;
+        case 'revisions':
+          return `<form onsubmit="submitSectionAdd(event, 'revision')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-1">Tạo mốc lịch sử chỉnh sửa</h2><p class="text-xs text-slate-500 mb-4">Lưu ảnh chụp nội dung hiện tại của bài viết cùng ghi chú.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${label('Bài viết', `<select name="postId" required class="${inputClass}">${db.posts.map(post => `<option value="${escapeHTML(post.id)}">${escapeHTML(post.title)}</option>`).join('')}</select>`)}${input('add-revision-action', 'Ghi chú chỉnh sửa', 'Ví dụ: rà soát trước khi xuất bản')}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Lưu phiên bản</button></form>`;
+        case 'audit':
+          return `<form onsubmit="submitSectionAdd(event, 'audit')" class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900 mb-1">Thêm ghi chú nhật ký</h2><p class="text-xs text-slate-500 mb-4">Ghi chú bổ sung được lưu local trong trình duyệt, tách biệt nhật ký xác thực phía máy chủ.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${input('add-audit-action', 'Tiêu đề ghi chú', 'Nội dung ghi chú')}${textarea('add-audit-details', 'Chi tiết', 'Thông tin bổ sung', false, 2)}</div><button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Thêm ghi chú</button></form>`;
+        case 'settings':
+          return `<section class="bg-white border border-blue-100 rounded-2xl p-5"><h2 class="font-bold text-slate-900">Thêm tài khoản Google</h2><p class="text-xs text-slate-500 mt-1">Dùng biểu mẫu cấp quyền bên dưới; chỉ Super Admin mới có quyền thêm.</p><button type="button" onclick="openSettingsAdd()" class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">Mở biểu mẫu cấp quyền</button></section>`;
+        default:
+          return '';
+      }
+    }
+
+    async function submitSectionAdd(event, kind) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const values = Object.fromEntries(new FormData(form).entries());
+      const timestamp = new Date().toISOString();
+      const uniqueNameExists = (collection, name) =>
+        collection.some(item => item.name.trim().toLowerCase() === name.trim().toLowerCase());
+
+      if (['post', 'category', 'project', 'activity'].includes(kind) && !hasPermission('content.create')) {
+        toast('Bạn không có quyền tạo nội dung.');
+        return;
+      }
+      if (['member', 'department'].includes(kind) && !hasPermission('members.manage') && !hasPermission('settings.manage')) {
+        toast('Bạn không có quyền quản lý thành viên hoặc cơ cấu ban.');
+        return;
+      }
+      if (kind === 'media' && !hasPermission('content.edit')) {
+        toast('Bạn không có quyền quản lý media.');
+        return;
+      }
+      if (kind === 'sponsor' && !hasPermission('settings.manage')) {
+        toast('Chỉ Admin mới có quyền quản lý nhà tài trợ.');
+        return;
+      }
+      if (kind === 'revision' && !hasPermission('content.edit')) {
+        toast('Bạn không có quyền tạo phiên bản nội dung.');
+        return;
+      }
+      if (kind === 'audit' && !hasPermission('settings.manage')) {
+        toast('Chỉ Admin mới có quyền thêm ghi chú nhật ký.');
+        return;
+      }
+
+      if (kind === 'post') {
+        const category = db.categories.find(item => item.id === values.categoryId);
+        if (!category) { toast('Hãy tạo danh mục trước khi thêm bài viết.'); return; }
+        const id = nextRecordId('POST', db.posts);
+        const post = {
+          id,
+          title: values['add-content-title'].trim(),
+          category: category.name,
+          categoryId: category.id,
+          department: values.department || '',
+          author: session.googleName || session.googleEmail,
+          status: 'published',
+          publishedAt: new Date().toLocaleDateString('vi-VN'),
+          updatedAt: timestamp,
+          views: 0,
+          excerpt: values['add-content-excerpt'].trim(),
+          content: values['add-content-body'].trim(),
+          reviewNote: '',
+          revisions: []
+        };
+        db.posts.unshift(post);
+        recordRevision(post, 'Tạo và xuất bản', timestamp);
+        recordLocalAudit('Tạo và xuất bản bài viết', post.title);
+      } else if (kind === 'category') {
+        const name = values['add-category-name'].trim();
+        if (uniqueNameExists(db.categories, name)) { toast('Danh mục này đã tồn tại.'); return; }
+        db.categories.push({
+          id: nextRecordId('CAT', db.categories),
+          name,
+          description: values['add-category-description'].trim()
+        });
+        recordLocalAudit('Tạo danh mục', name);
+      } else if (kind === 'project') {
+        const name = values['add-project-name'].trim();
+        db.projects.unshift({
+          id: nextRecordId('PRJ', db.projects),
+          name,
+          department: values.department || '',
+          lead: values['add-project-lead'].trim(),
+          membersCount: 0,
+          progress: Number(values['add-project-progress']),
+          status: values['add-project-status'].trim(),
+          artType: 'rocket',
+          summary: values['add-project-summary'].trim(),
+          result: values['add-project-result'].trim()
+        });
+        recordLocalAudit('Tạo dự án', name);
+      } else if (kind === 'activity') {
+        const training = uiState.tab === 'training';
+        const name = values['add-activity-title'].trim();
+        db.activities.unshift({
+          id: nextRecordId('ACT', db.activities),
+          title: name,
+          type: training ? 'training' : 'event',
+          typeLabel: training ? 'Đào tạo chuyên môn' : 'Sự kiện CLB',
+          department: values.department || '',
+          date: values['add-activity-date'] ? new Date(values['add-activity-date']).toLocaleString('vi-VN') : '',
+          location: values['add-activity-location'].trim(),
+          description: values['add-activity-description'].trim(),
+          status: 'published',
+          registered: 0,
+          capacity: Number(values['add-activity-capacity']) || 0
+        });
+        recordLocalAudit(training ? 'Tạo chương trình đào tạo' : 'Tạo hoạt động', name);
+      } else if (kind === 'member') {
+        const name = values['add-member-name'].trim();
+        db.members.unshift({
+          id: nextRecordId('MEM', db.members),
+          initials: name.split(/\s+/).slice(-2).map(part => part[0]).join('').toUpperCase(),
+          fullName: name,
+          studentId: values['add-member-student-id'].trim(),
+          position: values['add-member-position'].trim() || 'Thành viên',
+          department: values.department || '',
+          generation: values['add-member-generation'].trim(),
+          email: values['add-member-email'].trim(),
+          isExecutive: true
+        });
+        recordLocalAudit('Thêm thành viên', name);
+      } else if (kind === 'department') {
+        const name = values['add-department-name'].trim();
+        if (uniqueNameExists(db.departments, name)) { toast('Ban này đã tồn tại.'); return; }
+        db.departments.push({
+          id: nextRecordId('DEP', db.departments),
+          name,
+          description: values['add-department-description'].trim()
+        });
+        recordLocalAudit('Tạo ban', name);
+      } else if (kind === 'media') {
+        const url = new URL(values['add-media-url']);
+        if (!['http:', 'https:'].includes(url.protocol)) { toast('URL media phải dùng HTTP hoặc HTTPS.'); return; }
+        const name = values['add-media-name'].trim();
+        db.media.unshift({
+          id: nextRecordId('MED', db.media),
+          name,
+          folder: values['add-media-folder'].trim() || 'general',
+          dimensions: '',
+          size: '',
+          uploadedAt: new Date().toLocaleDateString('vi-VN'),
+          type: values.mediaType,
+          url: url.href
+        });
+        recordLocalAudit('Thêm tài nguyên media', name);
+      } else if (kind === 'sponsor') {
+        const name = values['add-sponsor-name'].trim();
+        db.sponsors.unshift({
+          id: nextRecordId('SP', db.sponsors),
+          name,
+          tier: values['add-sponsor-tier'].trim(),
+          website: values['add-sponsor-website'].trim(),
+          active: true
+        });
+        recordLocalAudit('Thêm nhà tài trợ', name);
+      } else if (kind === 'revision') {
+        const post = db.posts.find(item => item.id === values.postId);
+        if (!post) { toast('Không tìm thấy bài viết cần lưu phiên bản.'); return; }
+        recordRevision(post, values['add-revision-action'].trim(), timestamp);
+        recordLocalAudit('Lưu phiên bản bài viết', post.title);
+      } else if (kind === 'audit') {
+        db.auditLogs.unshift({
+          id: `NOTE-${Date.now()}`,
+          actor: session.googleEmail,
+          action: values['add-audit-action'].trim(),
+          targetEmail: values['add-audit-details'].trim() || 'Ghi chú bổ sung',
+          time: timestamp,
+          source: 'local-note'
+        });
+      }
+
+      form.reset();
+      document.getElementById('section-add-panel').hidden = true;
+      if (!await save()) return;
+      toast('Đã thêm dữ liệu.');
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[char]);
+    }
+
+    function render() {
+      const tabs = [
+        { id: 'overview', label: 'Tổng quan hệ thống', icon: 'layout-dashboard' },
+        { id: 'posts', label: 'Bài viết (Space News)', icon: 'newspaper', badge: db.posts.filter(p => p.status !== 'published').length },
+        { id: 'categories', label: 'Danh mục bài viết', icon: 'folders' },
+        { id: 'projects', label: 'Dự án (Space Lab)', icon: 'rocket' },
+        { id: 'activities', label: 'Hoạt động', icon: 'calendar-days' },
+        { id: 'training', label: 'Đào tạo', icon: 'graduation-cap' },
+        { id: 'members', label: 'Nhân sự CLB', icon: 'users-round' },
+        { id: 'departments', label: 'Các ban hoạt động', icon: 'network' },
+        { id: 'media', label: 'Thư viện Media', icon: 'images' },
+        { id: 'sponsors', label: 'Nhà tài trợ', icon: 'handshake' },
+        { id: 'revisions', label: 'Lịch sử chỉnh sửa', icon: 'history' },
+        { id: 'audit', label: 'Nhật ký hoạt động', icon: 'history' },
+        { id: 'settings', label: 'Tài khoản & Cài đặt', icon: 'settings-2' }
+      ];
+      document.getElementById('sidebar-nav').innerHTML = tabs.map(tab => `
+        <button onclick="switchTab('${tab.id}')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${uiState.tab === tab.id ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25' : 'text-slate-400 hover:text-white hover:bg-slate-800/70'}">
+          <span class="flex items-center gap-3 truncate"><i data-lucide="${tab.icon}" class="w-4 h-4 shrink-0"></i><span class="truncate">${tab.label}</span></span>
+          ${tab.badge ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${tab.badge}</span>` : ''}
+        </button>
+      `).join('');
+      const currentTab = tabs.find(tab => tab.id === uiState.tab) || tabs[0];
+      document.getElementById('header-title').textContent = currentTab.label;
+      document.getElementById('header-breadcrumb').textContent = currentTab.label;
+      document.getElementById('current-user-name').textContent = session.googleName;
+      document.getElementById('current-user-email').textContent = session.googleEmail;
+      document.getElementById('rbac-banner').innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div><span class="px-2 py-0.5 rounded-md font-bold border bg-blue-100 text-blue-700 border-blue-200">${ROLES[uiState.role].label}</span> <span class="ml-1">${ROLES[uiState.role].desc}</span></div>
+          <span class="font-mono text-[11px] text-blue-700">Google OAuth • Whitelist server-side</span>
+        </div>`;
+
+      const workspace = document.getElementById('workspace');
+      if (uiState.tab === 'overview') {
+        const cards = [
+          { title: 'Bài viết Space News', count: db.baselineCounts.posts + db.posts.length, icon: 'newspaper', color: 'blue', tab: 'posts' },
+          { title: 'Dự án Space Lab', count: db.baselineCounts.projects + db.projects.length, icon: 'rocket', color: 'sky', tab: 'projects' },
+          { title: 'Sự kiện & Đào tạo', count: db.baselineCounts.activities + db.activities.length, icon: 'calendar-days', color: 'violet', tab: 'activities' },
+          { title: 'Thành viên CLB', count: db.baselineCounts.members + db.members.length, icon: 'users-round', color: 'emerald', tab: 'members' }
+        ];
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            ${cards.map(card => `
+              <button onclick="uiState.tab='${card.tab}'; render()" class="text-left bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-5 transition-colors">
+                <div class="flex justify-between items-center"><span class="text-xs font-bold uppercase tracking-wider text-slate-400">${card.title}</span><i data-lucide="${card.icon}" class="w-5 h-5 text-${card.color}-600"></i></div>
+                <div class="mt-4 text-3xl font-extrabold font-mono text-slate-900">${card.count}</div>
+                <div class="mt-2 text-xs text-blue-600 font-semibold">Mở phân hệ <span aria-hidden="true">→</span></div>
+              </button>
+            `).join('')}
+          </div>
+          <section class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between"><div><h2 class="font-bold text-slate-900">Bài viết mới nhất</h2><p class="text-xs text-slate-500 mt-1">Các bài viết đã đăng trên trang chủ</p></div><button onclick="uiState.tab='posts'; render()" class="text-xs font-semibold text-blue-600 hover:text-blue-700">Xem tất cả</button></div>
+            <div class="divide-y divide-slate-100">
+              ${db.posts.filter(post => post.status === 'published').slice(0, 5).map(post => `
+                <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div><div class="font-bold text-sm text-slate-900">${escapeHTML(post.title)}</div><div class="text-xs text-slate-500 mt-1">Tác giả: ${escapeHTML(post.author)} • ${escapeHTML(post.publishedAt || post.updatedAt || '')}</div></div>
+                  <span class="w-fit px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold">Đã đăng</span>
+                </div>
+              `).join('') || '<p class="p-5 text-sm text-slate-500">Chưa có bài viết nào được đăng.</p>'}
+            </div>
+          </section>`;
+      } else if (uiState.tab === 'posts') {
+        workspace.innerHTML = `
+          <section class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="p-5 border-b border-slate-200"><h2 class="font-bold text-slate-900">Bài viết Space News</h2><p class="text-xs text-slate-500 mt-1">Bài viết mới được đăng trực tiếp lên trang chủ</p></div>
+            <div class="divide-y divide-slate-100">
+              ${db.posts.map(post => `
+                <article class="p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                  <div class="min-w-0"><div class="font-bold text-sm text-slate-900">${escapeHTML(post.title)}</div><div class="text-xs text-slate-500 mt-1">Tác giả: ${escapeHTML(post.author)} • ${escapeHTML(post.category)} • <strong>${post.status === 'published' ? 'Đã đăng trên trang chủ' : 'Bản nháp cũ'}</strong></div><p class="text-xs text-slate-500 mt-2">${escapeHTML(post.excerpt || '')}</p></div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    ${hasPermission('content.delete') ? `<button onclick="deletePost('${escapeHTML(post.id)}')" class="px-3 py-2 rounded-lg border border-slate-200 text-rose-600 text-xs font-semibold cursor-pointer">Xóa</button>` : ''}
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+          </section>`;
+      } else if (uiState.tab === 'categories') {
+        workspace.innerHTML = `
+          <section class="bg-white border border-slate-200 rounded-2xl divide-y divide-slate-100">${db.categories.map(category => `<article class="p-4 flex items-center justify-between gap-3"><div><h2 class="font-bold text-sm text-slate-900">${escapeHTML(category.name)}</h2><p class="text-xs text-slate-500 mt-1">${escapeHTML(category.description || 'Chưa có mô tả')} • ${db.posts.filter(post => post.categoryId === category.id).length} bài viết</p></div><button onclick="deleteCategory('${escapeHTML(category.id)}')" class="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-600 text-xs font-semibold">Xóa</button></article>`).join('') || '<p class="p-5 text-sm text-slate-500">Chưa có danh mục.</p>'}</section>`;
+      } else if (uiState.tab === 'projects') {
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            ${db.projects.map(project => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
+                <div class="flex items-start justify-between gap-3"><div><div class="text-[11px] font-mono font-bold text-sky-600">${escapeHTML(project.id)} • ${escapeHTML(project.department || 'Space Lab')}</div><h2 class="font-bold text-slate-900 mt-1">${escapeHTML(project.name)}</h2></div><span class="text-blue-600 font-mono font-bold">${project.progress}%</span></div>
+                <p class="text-sm text-slate-500 leading-relaxed">${escapeHTML(project.summary)}</p>
+                <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full" style="width:${Math.max(0, Math.min(100, Number(project.progress) || 0))}%"></div></div>
+                <div class="flex justify-between text-xs text-slate-500"><span>Lead: <strong class="text-slate-700">${escapeHTML(project.lead)}</strong></span><span>${escapeHTML(project.status || '')}</span></div>
+                <input aria-label="Cập nhật tiến độ ${escapeHTML(project.name)}" type="range" min="0" max="100" value="${project.progress}" onchange="updateProgress('${escapeHTML(project.id)}', this.value)" class="w-full accent-blue-600 cursor-pointer" />
+              </article>
+            `).join('')}
+          </div>`;
+      } else if (uiState.tab === 'activities') {
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${db.activities.filter(activity => activity.type !== 'training').map(activity => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between gap-2"><span class="text-xs font-mono font-semibold text-sky-600">${escapeHTML(activity.date)}</span><span class="px-2 py-1 rounded-lg text-[11px] font-semibold ${activity.status === 'published' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${activity.status === 'published' ? 'Đã xuất bản' : 'Bản nháp'}</span></div>
+                <h2 class="font-bold text-slate-900">${escapeHTML(activity.title)}</h2><p class="text-xs text-slate-500">${escapeHTML(activity.typeLabel || activity.type || '')} • ${escapeHTML(activity.location)}</p>
+              </article>
+            `).join('')}
+          </div>`;
+      } else if (uiState.tab === 'training') {
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${db.activities.filter(activity => activity.type === 'training').map(activity => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between gap-2"><span class="text-xs font-mono font-semibold text-sky-600">${escapeHTML(activity.date)}</span><span class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-blue-50 text-blue-700">${activity.registered || 0}/${activity.capacity || 0} đăng ký</span></div>
+                <h2 class="font-bold text-slate-900">${escapeHTML(activity.title)}</h2><p class="text-xs text-slate-500">${escapeHTML(activity.department)} • ${escapeHTML(activity.location)}</p>
+              </article>
+            `).join('') || '<p class="text-sm text-slate-500">Chưa có chương trình đào tạo.</p>'}
+          </div>`;
+      } else if (uiState.tab === 'members') {
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            ${db.members.map(member => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-400 text-white font-bold flex items-center justify-center shrink-0">${escapeHTML(member.initials || 'BK')}</div>
+                <div class="min-w-0"><h2 class="font-bold text-slate-900 truncate">${escapeHTML(member.fullName)}</h2><p class="text-xs text-sky-600 mt-1">${escapeHTML(member.position)}</p><p class="text-[11px] text-slate-500 mt-1">${escapeHTML(member.department)}</p></div>
+              </article>
+            `).join('')}
+          </div>`;
+      } else if (uiState.tab === 'media') {
+        workspace.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            ${db.media.map(media => `
+              <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                <div class="h-32 bg-gradient-to-br from-slate-950 via-blue-950 to-sky-900 flex items-center justify-center"><i data-lucide="image" class="w-10 h-10 text-sky-300"></i></div>
+                <div class="p-4"><h2 class="font-mono text-xs font-bold text-slate-900 break-all">${escapeHTML(media.name)}</h2><p class="text-[11px] text-slate-500 mt-2">${escapeHTML(media.folder)} • ${escapeHTML(media.dimensions)} • ${escapeHTML(media.size)}</p><a href="${escapeHTML(media.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex mt-3 text-xs font-semibold text-blue-600 hover:underline">Mở tài nguyên ↗</a></div>
+              </article>
+            `).join('') || '<p class="text-sm text-slate-500">Thư viện hiện chưa có tài nguyên.</p>'}
+          </div>`;
+      } else if (uiState.tab === 'departments') {
+        workspace.innerHTML = `
+          <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${db.departments.map(department => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5">
+                <div class="flex items-center gap-3"><span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="network" class="w-5 h-5"></i></span><div><h2 class="font-bold text-slate-900">${escapeHTML(department.name)}</h2><span class="text-[11px] font-mono text-slate-400">${escapeHTML(department.id)}</span></div></div>
+                <p class="text-sm text-slate-500 mt-3">${escapeHTML(department.description)}</p>
+                <p class="text-xs text-slate-500 mt-3">${db.members.filter(member => member.department === department.name).length} nhân sự trong danh sách</p>
+              </article>
+            `).join('')}
+          </section>`;
+      } else if (uiState.tab === 'sponsors') {
+        workspace.innerHTML = `
+          <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            ${db.sponsors.map(sponsor => `
+              <article class="bg-white border border-slate-200 rounded-2xl p-5">
+                <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="handshake" class="w-5 h-5"></i></span>
+                <h2 class="font-bold text-slate-900 mt-3">${escapeHTML(sponsor.name)}</h2><p class="text-xs text-sky-600 mt-1">${escapeHTML(sponsor.tier)}</p>
+                ${sponsor.website ? `<a href="${escapeHTML(sponsor.website)}" target="_blank" rel="noopener noreferrer" class="inline-flex mt-3 text-xs font-semibold text-blue-600 hover:underline">Mở website ↗</a>` : ''}
+              </article>
+            `).join('') || '<p class="text-sm text-slate-500">Chưa có nhà tài trợ.</p>'}
+          </section>`;
+      } else if (uiState.tab === 'audit') {
+        workspace.innerHTML = `
+          <section class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="p-5 border-b border-slate-100"><h2 class="font-bold text-slate-900">Nhật ký quản trị</h2><p class="text-xs text-slate-500 mt-1">Các lần mở Dashboard và thay đổi quyền truy cập được lưu trên máy chủ.</p></div>
+            <div class="divide-y divide-slate-100">
+              ${auditEntries.map(entry => `<article class="p-4"><div class="text-sm font-semibold text-slate-900">${escapeHTML(entry.action)}</div><div class="text-xs text-slate-500 mt-1">${escapeHTML(entry.actor)} • ${escapeHTML(entry.targetEmail)} • ${escapeHTML(new Date(entry.time).toLocaleString('vi-VN'))}</div></article>`).join('') || '<p class="p-5 text-sm text-slate-500">Chưa có hoạt động được ghi nhận.</p>'}
+            </div>
+          </section>`;
+      } else if (uiState.tab === 'revisions') {
+        workspace.innerHTML = `
+          <section class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+            <div class="p-5 border-b border-slate-100"><h2 class="font-bold text-slate-900">Lịch sử phiên bản nội dung</h2><p class="text-xs text-slate-500 mt-1">Mỗi phiên bản giữ bản chụp nội dung, người thao tác và thời điểm.</p></div>
+            <div class="divide-y divide-slate-100">${db.revisions.map(revision => { const post = db.posts.find(item => item.id === revision.contentId); return `<article class="p-4"><div class="font-semibold text-sm text-slate-900">${escapeHTML(post?.title || revision.contentId)}</div><p class="text-xs text-slate-500 mt-1">${escapeHTML(revision.action)} • ${escapeHTML(revision.editor)} • ${escapeHTML(revision.time)}</p><details class="mt-2"><summary class="text-xs text-blue-600 cursor-pointer">Xem dữ liệu phiên bản</summary><pre class="mt-2 p-3 bg-slate-50 rounded-lg text-[11px] whitespace-pre-wrap break-words">${escapeHTML(revision.snapshot)}</pre></details></article>`; }).join('') || '<p class="p-5 text-sm text-slate-500">Chưa có phiên bản chỉnh sửa được lưu.</p>'}</div>
+          </section>`;
+      } else {
+        const canManage = hasPermission('users.manage');
+        const canConfigure = hasPermission('settings.manage');
+        workspace.innerHTML = `
+          <section class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
+            <div><h2 class="font-bold text-slate-900">Danh sách Gmail được cấp quyền</h2><p class="text-xs text-slate-500 mt-1">Máy chủ kiểm tra whitelist mỗi lần cấp hoặc xác minh phiên đăng nhập.</p></div>
+            ${canManage ? `
+              <form onsubmit="addWhitelistAccount(event)" class="grid grid-cols-1 md:grid-cols-4 gap-3 p-4 rounded-xl border border-blue-100 bg-blue-50/60">
+                <label class="text-xs font-semibold text-slate-700">Họ tên<input id="new-account-name" required maxlength="100" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nguyễn Văn A" /></label>
+                <label class="text-xs font-semibold text-slate-700">Email Google<input id="new-account-email" required type="email" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="name@gmail.com" /></label>
+                <label class="text-xs font-semibold text-slate-700">Vai trò<select id="new-account-role" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm"><option value="delegated_member">Thành viên ủy quyền</option><option value="department_head">Trưởng/phó ban</option><option value="chairperson">Chủ nhiệm</option><option value="admin">Super Admin</option></select></label>
+                <button type="submit" class="self-end px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Cấp quyền tài khoản</button>
+              </form>
+            ` : ''}
+            ${db.authorizedEmails.map(user => `
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div><strong>${escapeHTML(user.name)}</strong> <span class="text-slate-500">(${escapeHTML(user.email)})</span><div class="text-xs text-blue-600 font-semibold mt-1">${ROLES[user.role]?.label || escapeHTML(user.role)}</div></div>
+                <button ${canManage ? `onclick="toggleWhitelist('${escapeHTML(user.id)}')"` : 'disabled'} class="w-fit px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${user.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${user.isActive ? 'Đang kích hoạt' : 'Đã khóa'}</button>
+              </div>
+            `).join('')}
+          </section>
+          <section class="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
+            <div><h2 class="font-bold text-slate-900">Vai trò và quyền truy cập</h2><p class="text-xs text-slate-500 mt-1">Các quyền được định nghĩa riêng và liên kết với vai trò.</p></div>
+            <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-200 text-slate-500"><th class="py-2 pr-3">Vai trò</th>${db.permissions.map(permission => `<th class="py-2 px-2">${escapeHTML(permission.label)}</th>`).join('')}</tr></thead><tbody>${db.roles.map(role => `<tr class="border-b border-slate-100"><th class="py-3 pr-3 text-slate-800">${escapeHTML(role.name)}</th>${db.permissions.map(permission => `<td class="py-3 px-2 text-center">${db.rolePermissions.some(link => link.roleId === role.id && link.permissionId === permission.id) ? '<span class="text-emerald-600 font-bold">Có</span>' : '<span class="text-slate-300">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+            <p class="text-[11px] text-slate-400">${db.users.length} tài khoản được ánh xạ từ danh sách whitelist phía máy chủ. Phân quyền nội dung hiện dùng để điều khiển giao diện CMS localStorage.</p>
+          </section>
+          <form onsubmit="saveSettings(event)" class="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
+            <div><h2 class="font-bold text-slate-900">Cấu hình trang chủ</h2><p class="text-xs text-slate-500 mt-1">Thay đổi nội dung được lưu trên trình duyệt này.</p></div>
+            <label class="block text-xs font-semibold text-slate-700">Tiêu đề CLB<input id="cfg-title" type="text" value="${escapeHTML(db.siteSettings.clubTitle)}" ${canConfigure ? '' : 'disabled'} class="mt-1.5 w-full border border-slate-200 rounded-xl p-3 text-sm font-semibold disabled:bg-slate-100" /></label>
+            <label class="block text-xs font-semibold text-slate-700">Giới thiệu<textarea id="cfg-intro" rows="3" ${canConfigure ? '' : 'disabled'} class="mt-1.5 w-full border border-slate-200 rounded-xl p-3 text-sm disabled:bg-slate-100">${escapeHTML(db.siteSettings.shortIntro)}</textarea></label>
+            <button type="submit" ${canConfigure ? '' : 'disabled'} class="px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-semibold disabled:bg-slate-300 disabled:cursor-not-allowed">Lưu cấu hình</button>
+          </form>`;
+      }
+      workspace.insertAdjacentHTML('afterbegin', `
+        <div class="flex items-center justify-between gap-3">
+          <div><h2 class="text-sm font-bold text-slate-800">${currentTab.label}</h2><p class="text-xs text-slate-500 mt-1">Quản lý dữ liệu trong phân hệ này.</p></div>
+          <button type="button" onclick="${uiState.tab === 'settings' ? 'openSettingsAdd()' : 'openAddPanel()'}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i><span>Thêm</span>
+          </button>
+        </div>
+        <div id="section-add-panel" hidden>${addPanelMarkup()}</div>
+      `);
+      lucide.createIcons();
+    }
+
+    async function loadAuditLog() {
+      try {
+        const response = await fetch('/api/audit-log', { cache: 'no-store' });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || 'Không thể tải nhật ký hoạt động.');
+        auditEntries = [...payload.auditLog, ...db.auditLogs]
+          .filter((entry, index, entries) => entries.findIndex(item => item.id === entry.id) === index)
+          .sort((left, right) => new Date(right.time).getTime() - new Date(left.time).getTime());
+        if (uiState.tab === 'audit') {
+          const workspace = document.getElementById('workspace');
+          const container = workspace?.querySelector('.divide-y');
+          if (container) {
+            container.innerHTML = auditEntries.map(entry => `<article class="p-4"><div class="text-sm font-semibold text-slate-900">${escapeHTML(entry.action)}</div><div class="text-xs text-slate-500 mt-1">${escapeHTML(entry.actor)} • ${escapeHTML(entry.targetEmail)} • ${escapeHTML(new Date(entry.time).toLocaleString('vi-VN'))}</div></article>`).join('') || '<p class="p-5 text-sm text-slate-500">Chưa có hoạt động được ghi nhận.</p>';
+          }
+        }
+      } catch (error) {
+        toast(error.message || 'Không thể tải nhật ký hoạt động.');
+      }
+    }
+
+    async function initializeDashboard() {
+      try {
+        if (!db) {
+          window.location.replace('trangchu.html');
+          return;
+        }
+        const response = await fetch('/api/auth/session', { cache: 'no-store' });
+        const payload = await response.json();
+        if (!response.ok || !payload.authenticated || !payload.dashboardUnlocked) {
+          returnToPublicPortal(true);
+          return;
+        }
+        session = {
+          googleEmail: payload.user.email,
+          googleName: payload.user.name,
+          role: payload.user.role
+        };
+        uiState.role = session.role;
+        const cmsResponse = await fetch('/api/cms/state', { cache: 'no-store' });
+        const cmsPayload = await cmsResponse.json();
+        if (!cmsResponse.ok) throw new Error(cmsPayload.error || 'Không thể tải dữ liệu CMS từ SQLite.');
+        cmsStateVersion = cmsPayload.version;
+        if (cmsPayload.state) db = cmsPayload.state;
+        if (session.role === 'admin') {
+          const whitelistResponse = await fetch('/api/auth/whitelist', { cache: 'no-store' });
+          const whitelistPayload = await whitelistResponse.json();
+          if (!whitelistResponse.ok) throw new Error(whitelistPayload.error || 'Không thể tải whitelist từ máy chủ.');
+          db.authorizedEmails = whitelistPayload.authorizedEmails;
+          db.users = db.authorizedEmails.map(user => ({ ...user, roleId: user.role }));
+        } else {
+          db.authorizedEmails = [];
+          db.users = [];
+        }
+        ensureCMSCollections();
+        localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
+        if (!cmsPayload.state) {
+          const saveResponse = await fetch('/api/cms/state', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ state: db, expectedVersion: cmsStateVersion })
+          });
+          const savePayload = await saveResponse.json();
+          if (!saveResponse.ok) throw new Error(savePayload.error || 'Không thể khởi tạo dữ liệu CMS trong SQLite.');
+          cmsStateVersion = savePayload.version;
+        }
+        render();
+        window.setInterval(async () => {
+          const check = await fetch('/api/auth/session', { cache: 'no-store' });
+          const current = await check.json();
+          if (!check.ok || !current.authenticated || !current.dashboardUnlocked) returnToPublicPortal(true);
+        }, 60_000);
+      } catch (error) {
+        toast(error.message || 'Không thể xác minh phiên Google.');
+        window.setTimeout(() => returnToPublicPortal(true), 1200);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', initializeDashboard);
+  </script>
+</body>
+</html>

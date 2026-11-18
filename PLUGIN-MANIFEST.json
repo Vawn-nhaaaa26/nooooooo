@@ -1,0 +1,28 @@
+{
+  "id": "bkspacetech-cms",
+  "name": "BK SpaceTech CMS",
+  "version": "1.0.0",
+  "packageType": "standalone-nodejs-application",
+  "description": "BK SpaceTech CMS with Google whitelist authentication, role permissions, and Microsoft SQL Server persistence.",
+  "entryPoint": "server.mjs",
+  "requires": {
+    "node": ">=24",
+    "database": "Microsoft SQL Server 2012+",
+    "apacheModules": [
+      "mod_rewrite",
+      "mod_proxy",
+      "mod_proxy_http"
+    ]
+  },
+  "setup": [
+    "npm ci",
+    "Copy .env.example to .env and configure secrets and SQL Server",
+    "npm run migrate:sqlserver",
+    "npm start"
+  ],
+  "migrationSource": "data/bkspacetech.sqlite",
+  "excludedRuntimeData": [
+    ".env",
+    "node_modules"
+  ]
+}
