@@ -41,6 +41,8 @@ sqlcmd -S ".\SQLEXPRESS" -E -Q "CREATE DATABASE [bkspacetech_cms]"
 
 Sao chép `.env.example` thành `.env` rồi đặt thông tin SQL Server. Mặc định dùng Windows Authentication với `localhost\SQLEXPRESS`; dùng `DB_AUTH=sql` cùng `DB_USER`/`DB_PASSWORD` nếu SQL Server bật SQL Authentication. Có thể chạy lại schema an toàn; các bảng và dữ liệu hiện có không bị xóa.
 
+Khi triển khai trên Linux (bao gồm Vercel), đặt các biến môi trường `DB_AUTH=sql`, `DB_SERVER`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` và `DB_ENCRYPT=true` cho một SQL Server có thể truy cập từ máy chủ. Windows Authentication và SQL Server chỉ chạy trên máy cá nhân không dùng trực tiếp được trên Vercel. Driver `msnodesqlv8` chỉ là dependency tùy chọn cho Windows Authentication cục bộ.
+
 Để chuyển dữ liệu hiện có từ SQLite sang SQL Server, chạy một lần:
 
 ```powershell

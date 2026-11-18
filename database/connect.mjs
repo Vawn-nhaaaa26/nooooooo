@@ -5,7 +5,16 @@ export async function connectToSqlServer(env = process.env) {
   }
 
   const moduleName = auth === 'windows' ? 'mssql/msnodesqlv8.js' : 'mssql';
-  const module = await import(moduleName);
+  let module;
+  try {
+    module = await import(moduleName);
+  } catch (error) {
+    if (auth !== 'windows') throw error;
+    throw new Error(
+      'Windows Authentication requires the optional msnodesqlv8 driver. On Linux, configure DB_AUTH=sql and SQL Server credentials.',
+      { cause: error }
+    );
+  }
   const sqlDriver = module.default || module;
   const server = env.DB_SERVER || 'localhost';
   const instance = env.DB_INSTANCE || '';
